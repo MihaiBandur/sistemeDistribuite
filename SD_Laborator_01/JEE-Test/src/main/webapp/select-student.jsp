@@ -9,10 +9,11 @@
 		<form action="./select-student" method="post">
 			<p>
             	Nume: <input type="text" name="nume" />
-            	<br />
-            <br />
-            <br />
-            <button type="submit" name="submit">cauta studenti</button>
+            <p />
+            <p>
+                Prenume: <input type = "text" name="prenume">
+            <p />
+            <button type="submit" name="submit">Cauta Studenti</button>
             <br />
             <br />
 

@@ -18,34 +18,18 @@ public class SelectStudentServlet extends HttpServlet {
          throws ServletException, IOException{
         String nume = request.getParameter("nume");
         String prenume = request.getParameter("prenume");
-        int varsta = Integer.parseInt(request.getParameter("varsta"));
 
-        /*
-        procesarea datelor - calcularea anului nasterii
-         */
-        int anCurent = Year.now().getValue();
-        int anNastere = anCurent - varsta;
+        StudentBean studentGasit = DatabaseManager.findStudent(nume, prenume);
+        if(studentGasit != null) {
 
-        String folder_name = nume + "_" + prenume + "_" + Integer.toString(anNastere);
-
-
-        Path studentPath = AppConfig.getStudentsPath().resolve(Paths.get(folder_name + "/student.xml"));
-        Path folderPath = studentPath.getParent(); // Extragem calea folderului
-
-        File file = studentPath.toFile();
-        File folder = folderPath.toFile();
-
-
-        if (!file.exists()) {
-            response.sendError(404, "Nu a fost gasit niciun student cu aceste date de autentificare pe disc!");
-            return;
+            request.setAttribute("nume", studentGasit.getNume());
+            request.setAttribute("prenume", studentGasit.getPrenume());
+            request.setAttribute("varsta", studentGasit.getVarsta());
+            request.setAttribute("anulNasterii", studentGasit.getAnulNasterii());
+            request.getRequestDispatcher("./info-student.jsp").forward(request, response);
+        }else {
+            request.getRequestDispatcher("./eroare_read.jsp").forward(request, response);
         }
-
-        request.setAttribute("nume", nume);
-        request.setAttribute("prenume", prenume);
-        request.setAttribute("varsta", varsta);
-        request.setAttribute("anulNasterii", anNastere);
-        request.getRequestDispatcher("./info-student.jsp").forward(request, response);
     }
 
 }

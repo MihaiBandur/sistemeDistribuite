@@ -15,5 +15,11 @@
         <p>
             <a href="./stergere-student.jsp">Sterge student</a>
         </p>
+        <p>
+            <a href="./update-student.jsp">Update student</a>
+        </p>
+        <p>
+            <a href="./export-json">Descarca toata baza de date (Export JSON)</a>
+        </p>
     </body>
 </html>

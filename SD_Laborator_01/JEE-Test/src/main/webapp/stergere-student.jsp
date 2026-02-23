@@ -1,19 +1,20 @@
-<html xmlns:jsp="http://java.sun.com/JSP/Page">
-	<head>
-		<title>Formular stergere student</title>
-		<meta charset="UTF-8" />
-	</head>
-	<body>
-		<h3>Formular stergere student</h3>
-		Introduceti datele despre student:
-		    <form action="./delete-student" method="post">
-		    <p>
-			    Nume: <input type="text" name="nume", value = "nume student" />
-			    <br />
-			</p>
-			<br />
-			<br />
-			<button type="submit" name="submit">Trimite</button>
-		</form>
-	</body>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+    <head>
+       <title>Formular stergere student</title>
+    </head>
+    <body>
+       <h3>Formular stergere student</h3>
+       <p>Introduceti datele despre student:</p>
+
+       <form action="./delete-student" method="post">
+           <p>
+              Nume: <input type="text" name="nume" value="Numele studentului" />
+           </p>
+           <p>
+              Prenume: <input type="text" name="prenume" value="Prenumele studentului" />
+           </p>
+          <button type="submit" name="submit">Sterge</button>
+       </form>
+    </body>
 </html>
