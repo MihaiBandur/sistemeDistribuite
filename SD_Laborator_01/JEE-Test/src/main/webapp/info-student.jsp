@@ -23,11 +23,11 @@
 		</ul>
 
 		<form action="./process-student" method="post">
-        	Nume: <input type="text" name="nume" property="nume" value='<%= request.getAttribute("nume") %>' />
+        	Nume: <input type="text" name="nume" property="nume" value='nume student' />
         	<br />
-        	Prenume: <input type="text" name="prenume" property="prenume" value='<%= request.getAttribute("prenume") %>' />
+        	Prenume: <input type="text" name="prenume" property="prenume" value='prenume student' />
         	<br />
-        	Varsta: <input type="number" name="varsta" property="varsta" value='<%= request.getAttribute("varsta") %>' />
+        	Varsta: <input type="number" name="varsta" property="varsta" value='varsta student' />
         	<br />
         	<br />
         	<button type="submit" name="submit">Trimite</button>

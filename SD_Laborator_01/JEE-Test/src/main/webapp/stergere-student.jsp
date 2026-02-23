@@ -6,12 +6,11 @@
 	<body>
 		<h3>Formular stergere student</h3>
 		Introduceti datele despre student:
-		<form action="./delete-student" method="post">
-			Nume: <input type="text" name="nume" />
-			<br />
-			Prenume: <input type="text" name="prenume" />
-			<br />
-			Varsta: <input type="number" name="varsta" />
+		    <form action="./delete-student" method="post">
+		    <p>
+			    Nume: <input type="text" name="nume", value = "nume student" />
+			    <br />
+			</p>
 			<br />
 			<br />
 			<button type="submit" name="submit">Trimite</button>
