@@ -1,5 +1,4 @@
 import beans.StudentBean;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,7 +14,7 @@ public class DatabaseManager {
 
     private static final String DB_URL =
     private static final String DB_USER =
-    private static final String DB_PASSWORD = 
+    private static final String DB_PASSWORD =
 
     private static String sql_insert_query = "INSERT INTO studenti (nume, prenume, varsta, anul_nasterii) VALUES (?, ?, ?, ?)";
     private static String sql_update_query = "UPDATE studenti SET varsta = ? WHERE nume = ? AND prenume = ?";
@@ -29,13 +28,10 @@ public class DatabaseManager {
             if (global_conection == null || global_conection.isClosed()) {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 global_conection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                System.out.println("\n>>> SUCCES: Conexiunea MySQL a fost deschisa automat! <<<\n");
             }
         } catch (ClassNotFoundException e) {
-            System.err.println("EROARE: Driver-ul MySQL nu a fost gasit in proiect!");
             e.printStackTrace();
         } catch (SQLException e) {
-            System.err.println("EROARE: Nu s-a putut conecta la baza de date! Verifica parola/numele bazei.");
             e.printStackTrace();
         }
         return global_conection;

@@ -1,16 +1,8 @@
-import beans.StudentBean;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.Year;
 
 public class DeleteStudentServlet extends  HttpServlet {
     @Override

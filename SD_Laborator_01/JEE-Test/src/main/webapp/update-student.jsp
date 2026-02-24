@@ -9,14 +9,14 @@
 
        <form action="./update-student" method="post">
            <p>
-                Nume: <input type="text" name="nume" value="Numele studentului" />
+                Nume: <input type="text" name="nume"  />
            </p>
            <p>
-                Prenume: <input type="text" name="prenume" value="Prenumele studentului" />
+                Prenume: <input type="text" name="prenume" />
            </p>
 
            <p>
-                Varsta: <input type="number" name="varsta" value="Noua varsta" />
+                Varsta: <input type="number" name="varsta" />
            </p>
            <br />
            <br />
