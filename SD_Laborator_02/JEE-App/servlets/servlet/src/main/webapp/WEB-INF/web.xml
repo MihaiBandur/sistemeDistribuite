@@ -4,6 +4,9 @@
 
 <web-app>
     <display-name>Web Component App</display-name>
+    <listener>
+        <listener-class>MonitoringServlet</listener-class>
+    </listener>
     <servlet>
         <servlet-name>ProcessBankOperation</servlet-name>
         <servlet-class>ProcessBankOperationServlet</servlet-class>
@@ -23,6 +26,11 @@
     <servlet>
         <servlet-name>UpdateStudent</servlet-name>
         <servlet-class>UpdateStudentServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AlarmServer</servlet-name>
+        <servlet-class>AlarmServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -45,5 +53,10 @@
     <servlet-mapping>
         <servlet-name>UpdateStudent</servlet-name>
         <url-pattern>/update-student</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AlarmServer</servlet-name>
+        <url-pattern>/alarm-server</url-pattern>
     </servlet-mapping>
 </web-app>
