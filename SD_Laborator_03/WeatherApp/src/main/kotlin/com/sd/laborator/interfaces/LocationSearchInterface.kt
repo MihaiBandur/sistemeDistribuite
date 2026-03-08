@@ -1,5 +1,6 @@
 package com.sd.laborator.interfaces
 
+
 interface LocationSearchInterface {
-    fun processLocationAndPassFurther(locationName: String): String
+    fun getLocation(location: String): Pair<Double, Double>?
 }
