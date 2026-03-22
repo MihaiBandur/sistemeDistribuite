@@ -7,7 +7,7 @@ import java.util.Locale
 
 @Service
 class filterRegionsService(private  val locationSearchService: LocationSearchInterface): filterRegionsInterface {
-    private val blacklistRegions = listOf("US", "UK")
+    private val blacklistRegions = listOf("US", "UK", )
 
     override fun filterRegions(location: String): String {
         val currentZone = System.getProperty("user.country") ?: Locale.getDefault().country
