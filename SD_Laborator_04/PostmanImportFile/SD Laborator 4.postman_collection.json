@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "777ae8d2-cca6-4b2d-b74b-490b4b9683a0",
+		"name": "SD Laborator 4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PhoneAgenda",
+			"item": [
+				{
+					"name": "Get Agenda",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8080/agenda?firstName=kotlin",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"agenda"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "kotlin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Person",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8080/person/10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Person",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8080/person/10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Person",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 10,\n\t\"firstName\": \"Luke\",\n\t\"lastName\": \"Skywalker\",\n\t\"telephoneNumber\": \"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8080/person",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Person",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 10,\n\t\"firstName\": \"Luke\",\n\t\"lastName\": \"Skywalker\",\n\t\"telephoneNumber\": \"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8080/person/10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Person",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"op\":\"add\",\n        \"path\":\"/telephoneNumber\",\n        \"value\":\"+40-202013\"\n    },\n    {\n        \"op\":\"replace\",\n        \"path\":\"/firstName\",\n        \"value\":\"Mike\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8080/person/10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Password Encryption Example",
+			"item": [
+				{
+					"name": "Get Hash Password",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2030/encrypt?password=Imi place SD&encodingId=SHA-256",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2030",
+							"path": [
+								"encrypt"
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "Imi place SD"
+								},
+								{
+									"key": "encodingId",
+									"value": "SHA-256"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Match Hash Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"Imi place SD\",\n    \"hashPassword\": \"{y+2AG+DyOwACJl+Y6vGdTKR2altUTZbxVbHt5SJJXiQ=}063683eab441975c3b2f20a1e64b3a00556c255aee729cc4fb1528717149e5e7\",\n    \"encodingId\": \"SHA-256\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2030/match",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2030",
+							"path": [
+								"match"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
