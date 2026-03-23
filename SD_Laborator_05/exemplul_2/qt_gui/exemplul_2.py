@@ -1,12 +1,12 @@
 import os
 import sys
 import json
-from re import search
 
 from PyQt6.QtWidgets import (QWidget, QApplication, QFileDialog, QMessageBox,
                              QDialog, QVBoxLayout, QFormLayout, QLineEdit,
                              QTextEdit, QPushButton)
 from PyQt6 import QtCore
+from PyQt6.QtCore import pyqtSlot
 from PyQt6.uic import loadUi
 from mq_communication import RabbitMq
 
@@ -14,7 +14,7 @@ from mq_communication import RabbitMq
 class AddBookDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Adauga o carte nou")
+        self.setWindowTitle("Adauga o carte noua")
         self.resize(400, 300)
 
         layout = QVBoxLayout(self)
@@ -44,11 +44,11 @@ class AddBookDialog(QDialog):
             'text': self.text_input.toPlainText().strip()
         }
 
+
 def debug_trace(ui=None):
     from pdb import set_trace
     QtCore.pyqtRemoveInputHook()
     set_trace()
-    # QtCore.pyqtRestoreInputHook()
 
 
 class LibraryApp(QWidget):
@@ -67,15 +67,15 @@ class LibraryApp(QWidget):
 
         self.rabbit_mq = RabbitMq(self)
 
+    @pyqtSlot(str)
     def set_response(self, response):
         self.result.setText(response)
 
     def send_request(self, request):
         self.rabbit_mq.send_message(message=request)
-        self.rabbit_mq.receive_message()
 
     def search(self):
-        search_string = self.search_bar.text()
+        search_string = self.search_bar.text().strip()
 
         format_str = 'raw'
         if self.json_rb.isChecked():
@@ -84,8 +84,8 @@ class LibraryApp(QWidget):
             format_str = 'html'
         elif hasattr(self, 'xml_rb') and self.xml_rb.isChecked():
             format_str = 'xml'
-        request = None
-        if not  search_string:
+
+        if not search_string:
             request = f'print:{format_str}'
         else:
             if self.author_rb.isChecked():
@@ -107,9 +107,12 @@ class LibraryApp(QWidget):
                 QMessageBox.warning(self, "Eroare", "Titlul și autorul sunt obligatorii!")
                 return
 
-            request = f"add:title={data['title']}|author={data['author']}|publisher={data['publisher']}|text={data['text']}"
-
+            request = (
+                f"add:title={data['title']}|author={data['author']}"
+                f"|publisher={data['publisher']}|text={data['text']}"
+            )
             self.send_request(request)
+
     def save_as_file(self):
         if self.json_rb.isChecked():
             ext = ".json"
@@ -131,28 +134,31 @@ class LibraryApp(QWidget):
             file_filter
         )
 
+        if not file_path:
+            return
 
-        if file_path:
-            if not file_path.endswith(ext):
-                file_path += ext
-            try:
-                with open(file_path, 'w', encoding='utf-8') as fp:
-                    if ext == '.html':
-                        fp.write(self.result.toHtml())
-                    elif ext == '.json':
-                        raw_text = self.result.toPlainText()
-                        try:
-                            parsed_json = json.loads(raw_text)
-                            json.dump(parsed_json, fp, ensure_ascii=False, indent=4)
-                        except json.JSONDecodeError:
-                            print("Avertisment: Textul nu este un JSON perfect valid. Se salveaza brut.")
-                            fp.write(raw_text)
-                    else:
-                        fp.write(self.result.toPlainText())
-                QMessageBox.information(self, 'Succes', f'Fisierul a fost salvat cu succes ca {ext}!')
-            except Exception as e:
-                print(f' Eroare la salvare {e}')
-                QMessageBox.warning(self, 'Eroare', 'Nu s-a putut salva fisierul.')
+        if not file_path.endswith(ext):
+            file_path += ext
+
+        try:
+            with open(file_path, 'w', encoding='utf-8') as fp:
+                if ext == '.html':
+                    fp.write(self.result.toHtml())
+                elif ext == '.json':
+                    raw_text = self.result.toPlainText()
+                    try:
+                        parsed_json = json.loads(raw_text)
+                        json.dump(parsed_json, fp, ensure_ascii=False, indent=4)
+                    except json.JSONDecodeError:
+                        print("Avertisment: Textul nu este un JSON valid. Se salveaza brut.")
+                        fp.write(raw_text)
+                else:
+                    fp.write(self.result.toPlainText())
+            QMessageBox.information(self, 'Succes', f'Fisierul a fost salvat cu succes ca {ext}!')
+        except Exception as e:
+            print(f'Eroare la salvare: {e}')
+            QMessageBox.warning(self, 'Eroare', 'Nu s-a putut salva fisierul.')
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

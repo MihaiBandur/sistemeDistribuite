@@ -1,8 +1,9 @@
 import pika
-from retry import retry
+import threading
+from PyQt6.QtCore import QMetaObject, Qt, Q_ARG
 
 
-class RabbitMq:
+class RabbitMq(threading.Thread):
     config = {
         'host': 'localhost',
         'port': 5672,
@@ -12,57 +13,90 @@ class RabbitMq:
         'routing_key': 'libraryapp.routingkey1',
         'queue': 'libraryapp.queue'
     }
-    credentials = pika.PlainCredentials(config['username'], config['password'])
-    parameters = pika.ConnectionParameters(host=config["host"],
-                                           port=config["port"],
-                                           credentials=credentials)
 
     def __init__(self, ui):
+        super().__init__()
         self.ui = ui
+        credentials = pika.PlainCredentials(self.config['username'], self.config['password'])
+        self.parameters = pika.ConnectionParameters(
+            host=self.config['host'],
+            port=self.config['port'],
+            credentials=credentials
+        )
 
-    def on_received_message(self, blocking_channel, deliver, properties, message):
-        result = message.decode('utf-8')
+        self.connection = None
+        self.channel = None
 
-        # CORECtAT: Folosim basic_ack pentru a confirma procesarea mesajului
-        blocking_channel.basic_ack(delivery_tag=deliver.delivery_tag)
+        self.daemon = True
+
+        self.start()
+
+    def run(self):
+        self.connection = pika.SelectConnection(
+            parameters=self.parameters,
+            on_open_callback=self.on_connection_open,
+            on_open_error_callback=self.on_connection_open_error,
+            on_close_callback=self.on_connection_closed
+        )
 
         try:
-            self.ui.set_response(result)
+            self.connection.ioloop.start()
         except Exception as e:
-            print(f"Eroare la setarea răspunsului în UI: {e}")
-        finally:
-            blocking_channel.stop_consuming()
+            print(f"Bucla asincrona s-a oprit: {e}")
 
-    @retry(pika.exceptions.AMQPConnectionError, delay=5, jitter=(1, 3))
-    def receive_message(self):
-        # automatically close the connection
-        with pika.BlockingConnection(self.parameters) as connection:
-            # automatically close the channel
-            with connection.channel() as channel:
-                channel.basic_consume(queue=self.config['queue'],
-                                      on_message_callback=self.on_received_message,
-                                      auto_ack=False)  # Ne asigurăm că auto_ack e False pentru a folosi basic_ack manual
-                try:
-                    channel.start_consuming()
-                # Don't recover connections closed by server
-                except pika.exceptions.ConnectionClosedByBroker:
-                    print("Connection closed by broker.")
-                # Don't recover on channel errors
-                except pika.exceptions.AMQPChannelError:
-                    print("AMQP Channel Error")
-                # Don't recover from KeyboardInterrupt
-                except KeyboardInterrupt:
-                    print("Application closed.")
+    def on_connection_open(self, connection):
+        print("Conexiune asincrona deschisa cu succes.")
+        connection.channel(on_open_callback=self.on_channel_open)
+
+    def on_connection_open_error(self, connection, err):
+        print(f"Eroare la conectare: {err}")
+
+    def on_connection_closed(self, connection, reason):
+        print(f"Conexiune închisă: {reason}")
+        self.connection.ioloop.stop()
+
+    def on_channel_open(self, channel):
+        self.channel = channel
+        self.channel.queue_declare(
+            queue=self.config['queue'],
+            durable=True,
+            callback=self.on_queue_declared
+        )
+
+    def on_queue_declared(self, frame):
+        self.channel.basic_consume(
+            queue=self.config['queue'],
+            on_message_callback=self.on_received_message,
+            auto_ack=False
+        )
+
+    def on_received_message(self, channel, deliver, properties, message):
+        result = message.decode('utf-8')
+
+        channel.basic_ack(delivery_tag=deliver.delivery_tag)
+
+        try:
+            # Thread-safe UI update
+            QMetaObject.invokeMethod(
+                self.ui,
+                "set_response",
+                Qt.ConnectionType.QueuedConnection,
+                Q_ARG(str, result)
+            )
+        except Exception as e:
+            print(f"Eroare la setarea raspunsului în UI: {e}")
 
     def send_message(self, message):
-        # automatically close the connection
-        with pika.BlockingConnection(self.parameters) as connection:
-            # automatically close the channel
-            with connection.channel() as channel:
-                self.clear_queue(channel)
-                channel.basic_publish(exchange=self.config['exchange'],
-                                      routing_key=self.config['routing_key'],
-                                      body=message)
+        if self.connection and self.connection.is_open:
+            cb = lambda: self._publish_internal(message)
+            self.connection.ioloop.add_callback_threadsafe(cb)
+        else:
+            print("Conexiunea nu este încă gata")
 
-    def clear_queue(self, channel):
-        channel.queue_purge(self.config['queue'])
+    def _publish_internal(self, message):
+        if self.channel and self.channel.is_open:
+            self.channel.basic_publish(
+                exchange=self.config['exchange'],
+                routing_key=self.config['routing_key'],
+                body=message
+            )
