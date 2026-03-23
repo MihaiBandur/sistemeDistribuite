@@ -33,7 +33,7 @@ class AddBookDialog(QDialog):
         layout.addLayout(form_layout)
 
         self.submit_btn = QPushButton("Adauga Cartea")
-        self.submit_btn.clicked.connect(self.accept) 
+        self.submit_btn.clicked.connect(self.accept)
         layout.addWidget(self.submit_btn)
 
     def get_data(self):

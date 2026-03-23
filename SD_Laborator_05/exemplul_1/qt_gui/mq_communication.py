@@ -5,10 +5,10 @@ from retry import retry
 
 class RabbitMq:
     config = {
-        'host': '192.168.23.129',
+        'host': 'localhost',
         'port': 5672,
-        'username': 'student',
-        'password': 'student',
+        'username': 'guest',
+        'password': 'guest',
         'exchange': 'stackapp.direct',
         'routing_key': 'stackapp.routingkey1',
         'queue': 'stackapp.queue'

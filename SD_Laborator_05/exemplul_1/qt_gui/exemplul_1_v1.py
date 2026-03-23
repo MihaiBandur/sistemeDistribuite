@@ -2,9 +2,9 @@ import os
 import sys
 import json
 from functools import partial
-from PyQt5.QtWidgets import QWidget, QApplication
-from PyQt5.uic import loadUi
-from PyQt5 import QtCore
+from PyQt6.QtWidgets import QWidget, QApplication
+from PyQt6.uic import loadUi
+from PyQt6 import QtCore
 from mq_communication import RabbitMq
 
 
@@ -75,4 +75,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = StackApp()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
