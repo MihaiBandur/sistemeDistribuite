@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestiune Cheltuieli</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        hr { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h2>Gestiune Cheltuieli Familie</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>{% for message in messages %}<li><b>{{ message }}</b></li>{% endfor %}</ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if session.get('username') %}
+        <p>Salut, {{ session['username'] }}! <a href="/logout">Logout</a></p>
+
+        <h3>Adaugă Cheltuială</h3>
+        <form action="/add_expense" method="POST">
+            Suma: <input type="number" step="0.01" name="amount" required><br><br>
+            Categorie:
+            <select name="category">
+                <option value="MAINTENANCE">Întreținere</option>
+                <option value="FOOD">Mâncare</option>
+                <option value="FUN">Distracție</option>
+                <option value="SCHOOL">Școală</option>
+                <option value="PERSONAL">Personale</option>
+            </select><br><br>
+            Descriere: <input type="text" name="description"><br><br>
+            <input type="submit" value="Adaugă Cheltuială">
+        </form>
+
+        <hr>
+
+        <h3>Cheltuielile tale</h3>
+        {% if expenses %}
+            <table>
+                <tr>
+                    <th>Suma (RON)</th>
+                    <th>Categorie</th>
+                    <th>Descriere</th>
+                </tr>
+                {% for exp in expenses %}
+                <tr>
+                    <td>{{ exp.amount }}</td>
+                    <td>{{ exp.category }}</td>
+                    <td>{{ exp.description }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Nu ai adăugat nicio cheltuială încă.</p>
+        {% endif %}
+
+    {% else %}
+        <h3>Login</h3>
+        <form action="/login" method="POST">
+            Utilizator: <input type="text" name="username" required><br><br>
+            Parolă: <input type="password" name="password" required><br><br>
+            <input type="submit" value="Login">
+        </form>
+
+        <hr>
+
+        <h3>Înregistrare cont nou</h3>
+        <form action="/register" method="POST">
+            Utilizator: <input type="text" name="username" required><br><br>
+            Parolă: <input type="password" name="password" required><br><br>
+            Prenume: <input type="text" name="firstName" required><br><br>
+            Nume: <input type="text" name="lastName" required><br><br>
+            <input type="submit" value="Înregistrează-te">
+        </form>
+    {% endif %}
+</body>
+</html>
