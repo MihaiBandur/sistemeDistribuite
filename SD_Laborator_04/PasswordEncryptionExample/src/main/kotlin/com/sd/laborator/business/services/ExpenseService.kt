@@ -1,4 +1,3 @@
-// business/services/ExpenseService.kt
 package com.sd.laborator.business.services
 
 import com.sd.laborator.business.interfaces.IExpenseService
