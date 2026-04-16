@@ -5,17 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaeeab89-547c-4d96-90d9-fe18d79942f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../exemplu_beerapp/BeerApp/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../SD_Laborator_04/PhoneAgenda/src/main/resources/static/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../SD_Laborator_05/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../SD_Laborator_05/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_1/qt_gui/exemplul_1_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_1/qt_gui/exemplul_1_v1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_1/qt_gui/exemplul_1_v1.ui" beforeDir="false" afterPath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_1/qt_gui/exemplul_1_v1.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_1/tkinter_gui/exemplul_1_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_1/tkinter_gui/exemplul_1_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_1/tkinter_gui/exemplul_1_v2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_1/tkinter_gui/exemplul_1_v2.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_2/qt_gui/exemplul_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_2/qt_gui/exemplul_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_2/qt_gui/exemplul_2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/../../../SD_Laborator_05/exemplul_2/qt_gui/exemplul_2.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../SD_Laborator_05/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../SD_Laborator_05/readme.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exemplu_beerapp/BeerAppCLI/.idea/BeerAppCLI.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/persistance/interfaces/IBookRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/persistance/mapper/BookRowMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/persistance/services/BookRepositoryService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/presentation/config/RabbitMqComponent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LibraryAppGUI/.idea/LibraryAppGUI.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../exemplu_beerapp/BeerApp/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../exemplu_beerapp/BeerApp/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../exemplu_beerapp/BeerAppCLI/beer_app_cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../exemplu_beerapp/BeerAppCLI/beer_app_cli.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/interfaces/ILibraryDAOService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/interfaces/ILibraryDAOService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/models/Book.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/models/Book.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/models/Content.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/models/Content.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/services/LibraryDAOService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/services/LibraryDAOService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/services/LibraryPrinterService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/services/LibraryPrinterService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/presentation/controllers/LibraryPrinterController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/presentation/controllers/LibraryPrinterController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LibraryAppGUI/library_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LibraryAppGUI/library_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LibraryAppGUI/library_manager.ui" beforeDir="false" afterPath="$PROJECT_DIR$/../LibraryAppGUI/library_manager.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LibraryAppGUI/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LibraryAppGUI/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +46,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "mihai1007"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/MihaiBandur/sistemeDistribuite",
+    "accountId": "ca6b3610-138e-42c1-806a-fd8d9e3a0da5"
+  }
+}]]></component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="vmo45qt5" />
   </component>
@@ -50,21 +72,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.LibraryApp [spring-boot:run].executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lab-05-solve&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/SD/SD_Laborator_06/exemplu_libraryapp/LibraryApp&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.LibraryApp [clean].executor": "Run",
+    "Maven.LibraryApp [compile].executor": "Run",
+    "Maven.LibraryApp [org.springframework.boot:spring-boot-maven-plugin:2.3.12.RELEASE:run].executor": "Run",
+    "Maven.LibraryApp [spring-boot:run].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/bandu/Documents/Anul_trei/Semestrul_doi/Sisteme_Distribuite/laboratoare_facute_de_mine/SD_Laborator_06/exemplu_libraryapp/LibraryApp",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Maven.LibraryApp [spring-boot:run]">
     <configuration name="LibraryAppKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sd.laborator.LibraryAppKt" />
@@ -83,21 +111,12 @@
     <list>
       <item itemvalue="Kotlin.LibraryAppKt" />
       <item itemvalue="Maven.LibraryApp [spring-boot:run]" />
-      <item itemvalue="Spring Boot.LibraryApp" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Kotlin.LibraryAppKt" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -114,5 +133,15 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.sqlite.SQLiteException" package="org.sqlite" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -4,16 +4,18 @@ from retry import retry
 
 class RabbitMq:
     config = {
-        'host': '192.168.23.129',
+        'host': 'localhost',
         'port': 5672,
-        'username': 'student',
-        'password': 'student',
+        'username': 'guest',
+        'password': 'guest',
         'exchange': 'beerapp.direct',
         'routing_key': 'beerapp.routingkey1',
         'queue': 'beerapp.queue'
     }
     credentials = pika.PlainCredentials(config['username'], config['password'])
-    parameters = pika.ConnectionParameters(host=config['host'], port=config['port'], credentials=credentials)
+    parameters = pika.ConnectionParameters(host=config["host"],
+                                           port=config["port"],
+                                           credentials=credentials)
 
     def on_received_message(self, blocking_channel, deliver, properties,
                             message):

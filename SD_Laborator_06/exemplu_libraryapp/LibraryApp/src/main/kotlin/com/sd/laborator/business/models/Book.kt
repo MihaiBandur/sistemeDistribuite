@@ -2,12 +2,20 @@ package com.sd.laborator.business.models
 
 class Book(private var data: Content) {
 
-    var name: String?
+    var id: Int
         get() {
-            return data.name
+            return data.id
         }
         set(value) {
-            data.name = value
+            data.id = value
+        }
+
+    var title: String?
+        get() {
+            return data.title
+        }
+        set(value) {
+            data.title = value
         }
 
     var author: String?
@@ -39,7 +47,7 @@ class Book(private var data: Content) {
     }
 
     fun hasTitle(title: String): Boolean {
-        return data.name.equals(title)
+        return data.title.equals(title)
     }
 
     fun publishedBy(publisher: String): Boolean {
