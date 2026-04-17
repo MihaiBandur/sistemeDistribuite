@@ -8,18 +8,26 @@ import java.net.Socket
 import java.util.*
 import kotlin.system.exitProcess
 
+import java.net.DatagramPacket
+import java.net.DatagramSocket
+import java.net.InetAddress
+import kotlin.concurrent.thread
+
 class MessageProcessorMicroservice {
     private var messageProcessorSocket: ServerSocket
     private lateinit var biddingProcessorSocket: Socket
     private var auctioneerConnection: Socket
     private var receiveInQueueObservable: Observable<String>
     private val subscriptions = CompositeDisposable()
-    private val messageQueue: Queue<Message> = LinkedList<Message>()
+    private val messageQueue: Queue<Message> = LinkedList()
+
+
+    private val journal = ExecutionJournal("message_processor")
 
     companion object Constants {
-        const val MESSAGE_PROCESSOR_PORT = 1600
-        const val BIDDING_PROCESSOR_HOST = "localhost"
-        const val BIDDING_PROCESSOR_PORT = 1700
+        const val MESSAGE_PROCESSOR_PORT   = 1600
+        const val BIDDING_PROCESSOR_HOST   = "localhost"
+        const val BIDDING_PROCESSOR_PORT   = 1700
     }
 
     init {
@@ -27,19 +35,39 @@ class MessageProcessorMicroservice {
         println("MessageProcessorMicroservice se executa pe portul: ${messageProcessorSocket.localPort}")
         println("Se asteapta mesaje pentru procesare...")
 
-        // Se asteapta conectarea de la AuctioneerMicroservice
+
+        val unfinished = journal.getUnfinishedOperations()
+        if (unfinished.isNotEmpty()) {
+            println("MessageProcessor: detectate operații neterminate – se reia procesarea...")
+            unfinished.forEach { (opId, data) ->
+                when {
+                    opId.startsWith("enqueue_") -> {
+                        try {
+                            val msg = Message.deserialize(data.toByteArray())
+                            messageQueue.add(msg)
+                            journal.logEnd(opId)
+                            println(" Mesaj recuperat în coadă: $msg")
+                        } catch (e: Exception) {
+                            println(" Nu s-a putut recupera mesajul '$opId': ${e.message}")
+                        }
+                    }
+                    opId.startsWith("send_to_bidding_") -> {
+                        println(" Trimitere spre BiddingProcessor întreruptă – va fi reluată.")
+                    }
+                }
+            }
+        }
+
+
         auctioneerConnection = messageProcessorSocket.accept()
         println("S-a conectat AuctioneerMicroservice!")
 
         val bufferReader = BufferedReader(InputStreamReader(auctioneerConnection.inputStream))
 
-        // se creeaza obiectul Observable cu care se captureaza mesajele de la AuctioneerMicroservice
         receiveInQueueObservable = Observable.create { emitter ->
             while (true) {
-                // se citeste mesajul de la AuctioneerMicroservice de pe socketul TCP
                 val receivedMessage = bufferReader.readLine()
 
-                // daca se primeste un mesaj gol (NULL), cealalta parte a fost inchisa
                 if (receivedMessage == null) {
                     bufferReader.close()
                     auctioneerConnection.close()
@@ -47,69 +75,77 @@ class MessageProcessorMicroservice {
                     break
                 }
 
-                // daca mesajul este cel de incheiere a licitatiei (avand corpul "final"), se emite Complete
                 if (Message.deserialize(receivedMessage.toByteArray()).body == "final") {
                     emitter.onComplete()
                     break
                 } else {
-                    // se emite ce s-a citit ca si element in fluxul de mesaje
                     emitter.onNext(receivedMessage)
                 }
             }
         }
     }
 
-    private  fun receiveAndProcessMessages(){
+    private fun receiveAndProcessMessages() {
         val receiveInQueueSubscription = receiveInQueueObservable
             .distinct()
             .subscribeBy(
-                onNext ={
+                onNext = {
                     val message = Message.deserialize(it.toByteArray())
+                    val opId    = "enqueue_${message.senderIpPort}_${message.timestamp.time}"
+
+                    journal.logStart(opId, it.trim())
                     println("Mesaj valid retinut $message")
                     messageQueue.add(message)
-                } ,
+                    journal.logEnd(opId)
+                },
                 onComplete = {
-                    val sortedList = messageQueue.sortedBy { it.timestamp }
+                    // Sortare după timestamp, curățare și re-populare coadă
+                    val sorted = messageQueue.sortedBy { it.timestamp }
                     messageQueue.clear()
-                    messageQueue.addAll(sortedList)
+                    messageQueue.addAll(sorted)
 
-                    val senderId = "${auctioneerConnection.localAddress}:${auctioneerConnection.localPort}"
+                    // Confirmăm primirea tuturor mesajelor spre Auctioneer
+                    val senderId               = "${auctioneerConnection.localAddress}:${auctioneerConnection.localPort}"
                     val finishedMessagesMessage = Message.create(senderId, "am primit tot")
-
                     auctioneerConnection.getOutputStream().write(finishedMessagesMessage.serialize())
                     auctioneerConnection.getOutputStream().flush()
                     auctioneerConnection.close()
 
                     sendProcessedMessages()
                 },
-                onError = {
-                        println("Eroare: $it")
-                }
-
+                onError = { println("Eroare: $it") }
             )
         subscriptions.add(receiveInQueueSubscription)
     }
+
     private fun sendProcessedMessages() {
+        val sendOpId = "send_to_bidding_${System.currentTimeMillis()}"
+        journal.logStart(sendOpId, "trimitere_spre_bidding_processor")
+
         try {
             biddingProcessorSocket = Socket(BIDDING_PROCESSOR_HOST, BIDDING_PROCESSOR_PORT)
             println("Trimit urmatoarele mesaje:")
 
             val forwardSubscription = Observable.fromIterable(messageQueue).subscribeBy(
                 onNext = {
+                    val itemOpId = "send_item_${it.senderIpPort}_${it.timestamp.time}"
+                    journal.logStart(itemOpId, String(it.serialize()).trim())
+
                     println(it.toString())
-                    // trimitere mesaje catre procesorul licitatiei, care decide rezultatul final
                     biddingProcessorSocket.getOutputStream().write(it.serialize())
                     biddingProcessorSocket.getOutputStream().flush()
+
+                    journal.logEnd(itemOpId)
                 },
                 onComplete = {
-                    val senderId = "${biddingProcessorSocket.localAddress}:${biddingProcessorSocket.localPort}"
+                    val senderId      = "${biddingProcessorSocket.localAddress}:${biddingProcessorSocket.localPort}"
                     val noMoreMessages = Message.create(senderId, "final")
 
                     biddingProcessorSocket.getOutputStream().write(noMoreMessages.serialize())
                     biddingProcessorSocket.getOutputStream().flush()
                     biddingProcessorSocket.close()
 
-                    // se elibereaza memoria din multimea de Subscriptions
+                    journal.logEnd(sendOpId)
                     subscriptions.dispose()
                 }
             )
@@ -120,8 +156,28 @@ class MessageProcessorMicroservice {
             exitProcess(1)
         }
     }
+    private fun startHeartbeat(numeIdentificare: String) {
+        thread(isDaemon = true) {
+            val socket = DatagramSocket()
+            val address = InetAddress.getByName("localhost")
+            val message = "HEARTBEAT|$numeIdentificare".toByteArray()
+
+            println("Pulsează heartbeat pentru $numeIdentificare...")
+
+            while (true) {
+                try {
+                    val packet = DatagramPacket(message, message.size, address, 2000)
+                    socket.send(packet)
+                    Thread.sleep(3000) // Trimite un puls la fiecare 3 secunde
+                } catch (e: Exception) {
+                    // Erorile de rețea temporare la heartbeat sunt ignorate
+                }
+            }
+        }
+    }
 
     fun run() {
+        startHeartbeat("MessageProcessorMicroservice")
         receiveAndProcessMessages()
     }
 }

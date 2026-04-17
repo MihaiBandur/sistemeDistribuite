@@ -2,31 +2,42 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Message private constructor(
-    val sender: String,
+    val senderIpPort: String,
+    val nume: String,
+    val telefon: String,
+    val email: String,
     val body: String,
     val timestamp: Date
 ) {
+
+    val sender: String get() = senderIpPort
+
     companion object {
-        fun create(sender: String, body: String): Message {
-            return Message(sender, body, Date())
+
+        fun create(senderIpPort: String, body: String): Message {
+            return Message(senderIpPort, "", "", "", body, Date())
+        }
+        fun create(senderIpPort: String, nume: String, telefon: String, email: String, body: String): Message {
+            return Message(senderIpPort, nume, telefon, email, body, Date())
         }
 
         fun deserialize(msg: ByteArray): Message {
-            // Folosim trim() pentru a elimina '\n' adăugat la serializare
             val msgString = String(msg).trim()
-            val (timestamp, sender, body) = msgString.split(' ', limit = 3)
-            return Message(sender, body, Date(timestamp.toLong()))
+            val parts = msgString.split('|', limit = 6)
+            if (parts.size < 6) throw IllegalArgumentException("Format mesaj invalid: $msgString")
+
+            return Message(parts[1], parts[2], parts[3], parts[4], parts[5], Date(parts[0].toLong()))
         }
     }
 
     fun serialize(): ByteArray {
-        return "${timestamp.time} $sender $body\n".toByteArray()
+     return   "${timestamp.time}|$senderIpPort|$nume|$telefon|$email|$body\n".toByteArray()
     }
 
     override fun toString(): String {
-        // Am pus șirul de formatare pe o singură linie
         val dateString = SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(timestamp)
-        return "[$dateString] $sender >>> $body"
+        val identity = if (nume.isNotBlank()) "$nume ($email, $telefon) @ $senderIpPort" else senderIpPort
+        return "[$dateString] $identity >>> $body"
     }
 }
 

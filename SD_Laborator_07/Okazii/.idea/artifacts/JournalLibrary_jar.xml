@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="MessageLibrary:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/MessageLibrary_jar</output-path>
-    <root id="archive" name="MessageLibrary.jar">
-      <element id="module-output" name="MessageLibrary" />
+  <artifact type="jar" build-on-make="true" name="JournalLibrary:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JournalLibrary_jar</output-path>
+    <root id="archive" name="JournalLibrary.jar">
+      <element id="module-output" name="JournalLibrary" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/2.1.20/kotlin-stdlib-2.1.20.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/13.0/annotations-13.0.jar" path-in-jar="/" />
     </root>
