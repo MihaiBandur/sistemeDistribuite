@@ -28,41 +28,38 @@ class BiddingProcessorMicroservice {
 
         // se asteapta mesaje primite de la MessageProcessorMicroservice
         val messageProcessorConnection = biddingProcessorSocket.accept()
+        println("S-a conectat MessageProcessorMicroservice!")
+
         val bufferReader = BufferedReader(InputStreamReader(messageProcessorConnection.inputStream))
 
         // se creeaza obiectul Observable cu care se captureaza mesajele de la MessageProcessorMicroservice
-        receiveProcessedBidsObservable = Observable.create<String> { emitter ->
+        receiveProcessedBidsObservable = Observable.create { emitter ->
             while (true) {
                 // se citeste mesajul de la MessageProcessorMicroservice de pe socketul TCP
                 val receivedMessage = bufferReader.readLine()
 
-                // daca se primeste un mesaj gol (NULL), atunci inseamna ca cealalta parte a socket-ului a fost inchisa
+                // daca se primeste un mesaj gol (NULL), cealalta parte a fost inchisa
                 if (receivedMessage == null) {
-                    // deci MessageProcessorMicroservice a fost deconectat
                     bufferReader.close()
                     messageProcessorConnection.close()
-
                     emitter.onError(Exception("Eroare: MessageProcessorMicroservice ${messageProcessorConnection.port} a fost deconectat."))
                     break
                 }
 
-                // daca mesajul este cel de tip „FINAL DE LISTA DE MESAJE” (avand corpul "final"), atunci se emite semnalul Complete
+                // daca mesajul este "final", se emite semnalul Complete
                 if (Message.deserialize(receivedMessage.toByteArray()).body == "final") {
                     emitter.onComplete()
 
-                    // s-au primit toate mesajele de la MessageProcessorMicroservice, i se trimite un mesaj pentru a semnala
-                    // acest lucru
-                    val finishedBidsMessage = Message.create(
-                        "${messageProcessorConnection.localAddress}:${messageProcessorConnection.localPort}",
-                        "am primit tot"
-                    )
+                    // s-au primit toate mesajele, trimitem confirmare
+                    val senderId = "${messageProcessorConnection.localAddress}:${messageProcessorConnection.localPort}"
+                    val finishedBidsMessage = Message.create(senderId, "am primit tot")
 
                     messageProcessorConnection.getOutputStream().write(finishedBidsMessage.serialize())
+                    messageProcessorConnection.getOutputStream().flush()
                     messageProcessorConnection.close()
-
                     break
                 } else {
-                    // se emite ce s-a citit ca si element in fluxul de mesaje
+                    // se emite ce s-a citit in fluxul de mesaje
                     emitter.onNext(receivedMessage)
                 }
             }
@@ -71,20 +68,19 @@ class BiddingProcessorMicroservice {
 
     private fun receiveProcessedBids() {
         // se primesc si se adauga in coada ofertele procesate de la MessageProcessorMicroservice
-        val receiveProcessedBidsSubscription = receiveProcessedBidsObservable
-            .subscribeBy(
-                onNext = {
-                    val message = Message.deserialize(it.toByteArray())
-                    println(message)
-                    processedBidsQueue.add(message)
-                },
-                onComplete = {
-                    // s-a incheiat primirea tuturor mesajelor
-                    // se decide castigatorul licitatiei
-                    decideAuctionWinner()
-                },
-                onError = { println("Eroare: $it") }
-            )
+        val receiveProcessedBidsSubscription = receiveProcessedBidsObservable.subscribeBy(
+            onNext = {
+                val message = Message.deserialize(it.toByteArray())
+                println(message)
+                processedBidsQueue.add(message)
+            },
+            onComplete = {
+                // s-a incheiat primirea tuturor mesajelor
+                // se decide castigatorul licitatiei
+                decideAuctionWinner()
+            },
+            onError = { println("Eroare: $it") }
+        )
         subscriptions.add(receiveProcessedBidsSubscription)
     }
 
@@ -96,28 +92,37 @@ class BiddingProcessorMicroservice {
             it.body.split(" ")[1].toInt()
         }
 
-        println("Castigatorul este: ${winner?.sender}")
+        println("Castigatorul este: ${winner?.sender} cu oferta: ${winner?.body}")
 
         try {
             auctioneerSocket = Socket(AUCTIONEER_HOST, AUCTIONEER_PORT)
 
             // se trimite castigatorul catre AuctioneerMicroservice
-            auctioneerSocket.getOutputStream().write(winner!!.serialize())
-            auctioneerSocket.close()
+            if (winner != null) {
+                auctioneerSocket.getOutputStream().write(winner.serialize())
+                auctioneerSocket.getOutputStream().flush()
+                println("Am anuntat castigatorul catre AuctioneerMicroservice.")
+            } else {
+                println("Nu a existat niciun castigator (lista vida).")
+                // Trimit mesaj de eroare sau gol catre Auctioneer ca sa se deblocheze
+                val emptyWinnerMessage = Message.create("BiddingProcessor", "licitez 0")
+                auctioneerSocket.getOutputStream().write(emptyWinnerMessage.serialize())
+                auctioneerSocket.getOutputStream().flush()
+            }
 
-            println("Am anuntat castigatorul catre AuctioneerMicroservice.")
+            auctioneerSocket.close()
         } catch (e: Exception) {
-            println("Nu ma pot conecta la Auctioneer!")
+            println("Nu ma pot conecta la Auctioneer! -> ${e.message}")
             biddingProcessorSocket.close()
             exitProcess(1)
+        } finally {
+            // Curatam resursele DUPA ce toata executia licitatiei a luat sfarsit
+            subscriptions.dispose()
         }
     }
 
     fun run() {
         receiveProcessedBids()
-
-        // se elibereaza memoria din multimea de Subscriptions
-        subscriptions.dispose()
     }
 }
 

@@ -4,29 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aaeeab89-547c-4d96-90d9-fe18d79942f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../exemplu_beerapp/BeerAppCLI/.idea/BeerAppCLI.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/persistance/interfaces/IBookRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/persistance/mapper/BookRowMapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/persistance/services/BookRepositoryService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/presentation/config/RabbitMqComponent.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LibraryAppGUI/.idea/LibraryAppGUI.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../exemplu_beerapp/BeerApp/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../exemplu_beerapp/BeerApp/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../exemplu_beerapp/BeerAppCLI/beer_app_cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../exemplu_beerapp/BeerAppCLI/beer_app_cli.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/interfaces/ILibraryDAOService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/interfaces/ILibraryDAOService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/models/Book.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/models/Book.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/models/Content.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/models/Content.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/services/LibraryDAOService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/services/LibraryDAOService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/services/LibraryPrinterService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/business/services/LibraryPrinterService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/presentation/controllers/LibraryPrinterController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/presentation/controllers/LibraryPrinterController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LibraryAppGUI/library_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LibraryAppGUI/library_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LibraryAppGUI/library_manager.ui" beforeDir="false" afterPath="$PROJECT_DIR$/../LibraryAppGUI/library_manager.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LibraryAppGUI/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LibraryAppGUI/requirements.txt" afterDir="false" />
-    </list>
+    <list default="true" id="aaeeab89-547c-4d96-90d9-fe18d79942f5" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

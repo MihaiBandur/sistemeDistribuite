@@ -3,7 +3,6 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.Socket
-import kotlin.Exception
 import kotlin.random.Random
 import kotlin.system.exitProcess
 
@@ -22,74 +21,78 @@ class BidderMicroservice {
     init {
         try {
             auctioneerSocket = Socket(AUCTIONEER_HOST, AUCTIONEER_PORT)
-            println("M-am conectat la Auctioneer!")
-
             myIdentity = "[${auctioneerSocket.localPort}]"
+            println("$myIdentity M-am conectat la Auctioneer!")
 
-            // se creeaza un obiect Observable ce va emite mesaje primite printr-un TCP
-            // fiecare mesaj primit reprezinta un element al fluxului de date reactiv
-            auctionResultObservable = Observable.create<String> { emitter ->
-                // se citeste raspunsul de pe socketul TCP
-                val bufferReader = BufferedReader(InputStreamReader(auctioneerSocket.inputStream))
-                val receivedMessage = bufferReader.readLine()
+            // Se creeaza un obiect Observable ce va emite mesaje primite printr-un TCP
+            auctionResultObservable = Observable.create { emitter ->
+                try {
+                    // Se citeste raspunsul de pe socketul TCP
+                    val bufferReader = BufferedReader(InputStreamReader(auctioneerSocket.inputStream))
+                    val receivedMessage = bufferReader.readLine()
 
-                // daca se primeste un mesaj gol (NULL), atunci inseamna ca cealalta parte a socket-ului a fost inchisa
-                if (receivedMessage == null) {
+                    // Daca se primeste un mesaj gol (NULL), cealalta parte a inchis conexiunea
+                    if (receivedMessage == null) {
+                        emitter.onError(Exception("AuctioneerMicroservice s-a deconectat."))
+                    } else {
+                        // Mesajul primit este emis in flux
+                        emitter.onNext(receivedMessage)
+                        // Se emite semnalul de incheiere al fluxului
+                        emitter.onComplete()
+                    }
+
                     bufferReader.close()
                     auctioneerSocket.close()
-
-                    emitter.onError(Exception("AuctioneerMicroservice s-a deconectat."))
-                    return@create
+                } catch (e: Exception) {
+                    emitter.onError(e)
                 }
-
-                // mesajul primit este emis in flux
-                emitter.onNext(receivedMessage)
-
-                // deoarece se asteapta un singur mesaj, in continuare se emite semnalul de incheiere al fluxului
-                emitter.onComplete()
-
-                bufferReader.close()
-                auctioneerSocket.close()
             }
         } catch (e: Exception) {
             println("$myIdentity Nu ma pot conecta la Auctioneer!")
             exitProcess(1)
+            // Initializam variabilele pentru a calma compilatorul (chiar daca aplicatia se opreste)
+            throw RuntimeException(e)
         }
     }
 
     private fun bid() {
-        // se genereaza o oferta aleatorie din partea bidderului curent
+        // Se genereaza o oferta aleatorie din partea bidderului curent
         val pret = Random.nextInt(MIN_BID, MAX_BID)
 
-        // se creeaza mesajul care incapsuleaza oferta
-        val biddingMessage = Message.create("${auctioneerSocket.localAddress}:${auctioneerSocket.localPort}",
-            "licitez $pret")
+        // Formam string-ul cu adresa pe o singura linie pentru a nu avea erori
+        val senderId = "${auctioneerSocket.localAddress}:${auctioneerSocket.localPort}"
 
-        // bidder-ul trimite pretul pentru care doreste sa liciteze
+        // Se creeaza mesajul care incapsuleaza oferta
+        val biddingMessage = Message.create(senderId, "licitez $pret")
+
+        // Bidder-ul trimite pretul pentru care doreste sa liciteze
         val serializedMessage = biddingMessage.serialize()
         auctioneerSocket.getOutputStream().write(serializedMessage)
+        auctioneerSocket.getOutputStream().flush()
 
-        // exista o sansa din 2 ca bidder-ul sa-si trimita oferta de 2 ori, eronat
-        if (Random.nextBoolean()) {
-            auctioneerSocket.getOutputStream().write(serializedMessage)
-        }
+        println("$myIdentity Am trimis oferta: $pret")
+
+        // Exista o sansa din 2 ca bidder-ul sa-si trimita oferta de 2 ori (comentat default)
+        // if (Random.nextBoolean()) {
+        //    auctioneerSocket.getOutputStream().write(serializedMessage)
+        //    auctioneerSocket.getOutputStream().flush()
+        // }
     }
 
     private fun waitForResult() {
         println("$myIdentity Astept rezultatul licitatiei...")
-        // bidder-ul se inscrie pentru primirea unui raspuns la oferta trimisa de acesta
+
+        // Bidder-ul se inscrie pentru primirea unui raspuns la oferta trimisa de acesta
         val auctionResultSubscription = auctionResultObservable.subscribeBy(
-            // cand se primeste un mesaj in flux, inseamna ca a sosit rezultatul licitatiei
             onNext = {
                 val resultMessage: Message = Message.deserialize(it.toByteArray())
                 println("$myIdentity Rezultat licitatie: ${resultMessage.body}")
             },
             onError = {
-                println("$myIdentity Eroare: $it")
+                println("$myIdentity Eroare la asteptarea rezultatului: ${it.message}")
             }
         )
-
-        // se elibereaza memoria obiectului Subscription
+        // Se elibereaza memoria obiectului Subscription
         auctionResultSubscription.dispose()
     }
 
