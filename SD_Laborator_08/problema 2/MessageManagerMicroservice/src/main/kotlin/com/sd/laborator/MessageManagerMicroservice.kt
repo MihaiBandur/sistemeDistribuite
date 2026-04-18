@@ -68,18 +68,24 @@ class MessageManagerMicroservice {
                     }
 
                     println("Primit mesaj: $receivedMessage")
-                    val (messageType, messageDestination, messageBody) = receivedMessage.split(" ", limit = 3)
+                    val parts = receivedMessage.split(" ", limit = 3)
+                    if (parts.size < 3) continue
+
+                    val (messageType, messageDestination, messageBody) = parts
 
                     when (messageType) {
-                        "intrebare" -> {
+                        "intrebare_publica", "raspuns_public" -> {
                             // tipul mesajului de tip intrebare este de forma:
                             // intrebare <DESTINATIE_RASPUNS> <CONTINUT_INTREBARE>
-                            broadcastMessage("intrebare ${clientConnection.port} $messageBody", except = clientConnection.port)
+                            broadcastMessage("${messageType} ${clientConnection.port} $messageBody", except = clientConnection.port)
                         }
-                        "raspuns" -> {
+                        "intrebare_privata", "raspuns_privat" -> {
                             // tipul mesajului de tip raspuns este de forma:
                             // raspuns <CONTINUT_RASPUNS>
-                            respondTo(messageDestination.toInt(), messageBody)
+                            respondTo(messageDestination.toInt(), "${messageType} ${clientConnection.port} $messageBody")
+                        }
+                        else -> {
+                            println("Tip de mesaj necunoscut: $messageType")
                         }
                     }
                 }

@@ -1,12 +1,15 @@
 package com.sd.laborator
 
+import java.util.Scanner
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.lang.Exception
 import java.net.Socket
 import kotlin.concurrent.thread
+import kotlin.jvm.Throws
 import kotlin.system.exitProcess
+
 
 class StudentMicroservice {
     // intrebarile si raspunsurile sunt mentinute intr-o lista de perechi de forma:
@@ -62,9 +65,33 @@ class StudentMicroservice {
     public fun run() {
         // microserviciul se inscrie in lista de "subscribers" de la MessageManager prin conectarea la acesta
         subscribeToMessageManager()
-
         println("StudentMicroservice se executa pe portul: ${messageManagerSocket.localPort}")
         println("Se asteapta mesaje...")
+
+        thread(isDaemon = true){
+            val scanner = Scanner(System.`in`)
+            println("Poti pune intrebari scriin in terminal:")
+            println(" -> public <mesaj> (Ex: public Care e tema?)")
+            println(" -> <port> <mesaj> (Ex: 1600 Mai este mult?)")
+
+            while (scanner.hasNextLine()){
+                val line = scanner.nextLine()
+                if(line.startsWith("public ")) {
+                    val q = line.removePrefix("public ")
+                    messageManagerSocket.getOutputStream().write(("intrebare_publica all $q\n").toByteArray())
+                } else{
+                    val parts = line.split(" ", limit = 2)
+                    if(parts.size == 2 && parts[0].toIntOrNull() != null){
+                        val port = parts[0]
+                        val q = parts[1]
+                        messageManagerSocket.getOutputStream().write(("intrebare_privata $port $q\n").toByteArray())
+                    }else{
+                        println("Format gresit! Foloseste 'public <mesaj>' sau '<port> <mesaj>'")
+                    }
+                }
+            }
+        }
+
 
         val bufferReader = BufferedReader(InputStreamReader(messageManagerSocket.inputStream))
 
@@ -82,18 +109,29 @@ class StudentMicroservice {
 
             // se foloseste un thread separat pentru tratarea intrebarii primite
             thread {
-                val (messageType, messageDestination, messageBody) = response.split(" ", limit = 3)
+                val parts = response.split(" ", limit = 3)
+                if(parts.size >= 3){
+                    val (messageType, senderPort, messageBody) = parts
 
-                when(messageType) {
-                    // tipul mesajului cunoscut de acest microserviciu este de forma:
-                    // intrebare <DESTINATIE_RASPUNS> <CONTINUT_INTREBARE>
-                    "intrebare" -> {
-                        println("Am primit o intrebare de la $messageDestination: \"${messageBody}\"")
-                        var responseToQuestion = respondToQuestion(messageBody)
-                        responseToQuestion?.let {
-                            responseToQuestion = "raspuns $messageDestination $it"
-                            println("Trimit raspunsul: \"${response}\"")
-                            messageManagerSocket.getOutputStream().write((responseToQuestion + "\n").toByteArray())
+                    when (messageType){
+                        "intrebare_publica", "intrebare_privata" ->{
+                            val tipAfisaj = if(messageType == "intrebare_publica") "PUBLIC" else "PRIVAT"
+                            println("\n[INTREBARE $tipAfisaj] de la $senderPort: \"$messageBody\"")
+
+                            val raspuns = respondToQuestion(messageBody)
+                            val replyType = if(messageType == "intrebare_publica") "raspuns_public" else "raspuns_privat"
+                            val dest = if (messageType == "intrebare_publica") "all" else senderPort
+                            if(raspuns != null){
+                                println(" -> Trimit $replyType: \"$raspuns\"")
+                                messageManagerSocket.getOutputStream().write(("$replyType $dest $raspuns\n").toByteArray())
+                            }else{
+                                println(" -> Trimit $replyType: \"$raspuns\"")
+                                messageManagerSocket.getOutputStream().write(("$replyType $dest nu fost gasit niciun raspuns\n").toByteArray())
+                            }
+                        }
+                        "raspuns_public", "raspuns_privat" -> {
+                            val tipAfisaj = if(messageType == "raspuns_public") "PUBLIC" else "PRIVAT"
+                            println("\n[RASPUNS $tipAfisaj] de la $senderPort: \"$messageBody\"")
                         }
                     }
                 }
