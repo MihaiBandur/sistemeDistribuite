@@ -20,6 +20,9 @@ class TeacherMicroservice {
         val MESSAGE_MANAGER_HOST = System.getenv("MESSAGE_MANAGER_HOST") ?: "localhost"
         const val MESSAGE_MANAGER_PORT = 1500
         const val TEACHER_PORT = 1600
+
+        val DB_HOST = System.getenv("DB_HOST") ?: "localhost"
+        const val DB_PORT = 1700
     }
 
     private fun subscribeToMessageManager() {
@@ -45,6 +48,23 @@ class TeacherMicroservice {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private suspend fun sendToDatabase(command: String): String {
+        return withContext(Dispatchers.IO) {
+            try {
+                val dbSocket = Socket(DB_HOST, DB_PORT)
+                dbSocket.getOutputStream().write((command + "\n").toByteArray())
+
+                val reader = BufferedReader(InputStreamReader(dbSocket.inputStream))
+                val response = reader.readLine()
+
+                dbSocket.close()
+                response ?: "Eroare: Nu s-a primit raspuns de la baza de date."
+            } catch (e: Exception) {
+                "Eroare conectare la DatabaseMicroservice: ${e.message}"
             }
         }
     }
@@ -96,8 +116,14 @@ class TeacherMicroservice {
                 while (true) {
                     val question = reader.readLine() ?: break
                     println("Intrebare de la GUI: $question")
-                    messageManagerSocket.getOutputStream()
-                        .write(("intrebare_publica all $question\n").toByteArray())
+
+                    if (question.startsWith("NOTA ") || question.startsWith("FINISH ")) {
+                        val dbResponse = sendToDatabase(question)
+                        sendToGui("[SISTEM NOTE]: $dbResponse")
+                    } else {
+                        messageManagerSocket.getOutputStream()
+                            .write(("intrebare_publica all $question\n").toByteArray())
+                    }
                 }
             } catch (e: Exception) {
                 println("Eroare conexiune GUI: ${e.message}")
@@ -110,7 +136,6 @@ class TeacherMicroservice {
             }
         }
     }
-}
-fun main(){
+}fun main(){
     TeacherMicroservice().run()
 }
