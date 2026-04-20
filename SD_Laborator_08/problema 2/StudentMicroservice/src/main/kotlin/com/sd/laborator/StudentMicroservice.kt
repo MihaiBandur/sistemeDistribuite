@@ -1,146 +1,128 @@
 package com.sd.laborator
 
-import java.util.Scanner
+import com.sun.swing.internal.plaf.basic.resources.basic_es
+import kotlinx.coroutines.*
+import kotlinx.coroutines.selects.select
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
-import java.lang.Exception
 import java.net.Socket
-import kotlin.concurrent.thread
-import kotlin.jvm.Throws
 import kotlin.system.exitProcess
 
 
 class StudentMicroservice {
-    // intrebarile si raspunsurile sunt mentinute intr-o lista de perechi de forma:
-    // [<INTREBARE 1, RASPUNS 1>, <INTREBARE 2, RASPUNS 2>, ... ]
     private lateinit var questionDatabase: MutableList<Pair<String, String>>
     private lateinit var messageManagerSocket: Socket
 
-    init {
-        val databaseLines: List<String> = File("questions_database.txt").readLines()
-        questionDatabase = mutableListOf()
-
-        /*
-         "baza de date" cu intrebari si raspunsuri este de forma:
-
-         <INTREBARE_1>\n
-         <RASPUNS_INTREBARE_1>\n
-         <INTREBARE_2>\n
-         <RASPUNS_INTREBARE_2>\n
-         ...
-         */
-        for (i in 0..(databaseLines.size - 1) step 2) {
-            questionDatabase.add(Pair(databaseLines[i], databaseLines[i + 1]))
-        }
-    }
-
-    companion object Constants {
-        // pentru testare, se foloseste localhost. pentru deploy, server-ul socket (microserviciul MessageManager) se identifica dupa un "hostname"
-        // acest hostname poate fi trimis (optional) ca variabila de mediu
+    companion object{
         val MESSAGE_MANAGER_HOST = System.getenv("MESSAGE_MANAGER_HOST") ?: "localhost"
         const val MESSAGE_MANAGER_PORT = 1500
     }
 
-    private fun subscribeToMessageManager() {
+    init {
+        val lines = File("questions_database.txt").readLines()
+        questionDatabase = mutableListOf()
+        for (i in 0..(lines.size - 1) step 2){
+            questionDatabase.add(Pair(lines[i], lines[i+1]))
+        }
+
+    }
+
+    private fun subscribeToMessageManager(){
         try {
             messageManagerSocket = Socket(MESSAGE_MANAGER_HOST, MESSAGE_MANAGER_PORT)
             println("M-am conectat la MessageManager!")
-        } catch (e: Exception) {
+        }catch (e: Exception){
             println("Nu ma pot conecta la MessageManager!")
             exitProcess(1)
         }
     }
 
-    private fun respondToQuestion(question: String): String? {
-        questionDatabase.forEach {
-            // daca se gaseste raspunsul la intrebare, acesta este returnat apelantului
-            if (it.first == question) {
-                return it.second
-            }
+    private  fun respondToQuestion(question: String): String =
+        questionDatabase.firstOrNull {
+            it.first == question
+        }?.second ?: "Nu a fost gasit niciun raspuns"
+
+    private suspend fun sendMessage(message: String){
+        withContext(Dispatchers.IO){
+            messageManagerSocket.getOutputStream().write((message + "\n").toByteArray())
         }
-        return null
     }
 
-    public fun run() {
-        // microserviciul se inscrie in lista de "subscribers" de la MessageManager prin conectarea la acesta
+    fun run() = runBlocking {
         subscribeToMessageManager()
         println("StudentMicroservice se executa pe portul: ${messageManagerSocket.localPort}")
         println("Se asteapta mesaje...")
+        println("Poti pune intrebari scriind in terminal:")
+        println(" -> public <mesaj>   (Ex: public Care e tema?)")
+        println(" -> <port> <mesaj>   (Ex: 52000 Mai este mult?)")
 
-        thread(isDaemon = true){
-            val scanner = Scanner(System.`in`)
-            println("Poti pune intrebari scriin in terminal:")
-            println(" -> public <mesaj> (Ex: public Care e tema?)")
-            println(" -> <port> <mesaj> (Ex: 1600 Mai este mult?)")
-
-            while (scanner.hasNextLine()){
-                val line = scanner.nextLine()
-                if(line.startsWith("public ")) {
-                    val q = line.removePrefix("public ")
-                    messageManagerSocket.getOutputStream().write(("intrebare_publica all $q\n").toByteArray())
-                } else{
-                    val parts = line.split(" ", limit = 2)
-                    if(parts.size == 2 && parts[0].toIntOrNull() != null){
-                        val port = parts[0]
-                        val q = parts[1]
-                        messageManagerSocket.getOutputStream().write(("intrebare_privata $port $q\n").toByteArray())
-                    }else{
-                        println("Format gresit! Foloseste 'public <mesaj>' sau '<port> <mesaj>'")
+        val inputJob = launch(Dispatchers.IO){
+            val reader = BufferedReader(InputStreamReader(System.`in`))
+            while (true){
+                val line = reader.readLine() ?: break
+                when {
+                    line.startsWith("public ") ->{
+                        val question = line.removePrefix("public ")
+                        sendMessage("intrebare_publica all $question")
+                    }
+                    else ->{
+                        val parts = line.split(" ", limit = 2)
+                        if (parts.size == 2 && parts[0].toIntOrNull() != null) {
+                            sendMessage("intrebare_privata ${parts[0]} ${parts[1]}")
+                        } else {
+                            println("Format gresit! Foloseste 'public <mesaj>' sau '<port> <mesaj>'")
+                        }
                     }
                 }
             }
         }
+        val receiveJob = launch(Dispatchers.IO) {
+            val reader = BufferedReader(InputStreamReader(messageManagerSocket.inputStream))
 
+            while (true){
+                val response = reader.readLine()
 
-        val bufferReader = BufferedReader(InputStreamReader(messageManagerSocket.inputStream))
+                if(response == null) {
+                    println("MessageManager s-a oprit.")
+                    break
+                }
+                    launch {
+                        val parts = response!!.split(" ", limit = 3)
+                        if(parts.size < 3) return@launch
 
-        while (true) {
-            // se asteapta intrebari trimise prin intermediarul "MessageManager"
-            val response = bufferReader.readLine()
+                        val (messageType, senderPort, messageBody) = parts
 
-            if (response == null) {
-                // daca se primeste un mesaj gol (NULL), atunci inseamna ca cealalta parte a socket-ului a fost inchisa
-                println("Microserviciul MessageService (${messageManagerSocket.port}) a fost oprit.")
-                bufferReader.close()
-                messageManagerSocket.close()
-                break
-            }
+                        when(messageType){
+                            "intrebare_publica", "intrebare_privata" ->{
+                                val tip = if (messageType == "intrebare_publica") "PUBLIC" else "PRIVAT"
+                                println("\n[INTREBARE $tip] de la $senderPort: \"$messageBody\"")
 
-            // se foloseste un thread separat pentru tratarea intrebarii primite
-            thread {
-                val parts = response.split(" ", limit = 3)
-                if(parts.size >= 3){
-                    val (messageType, senderPort, messageBody) = parts
+                                val raspuns = respondToQuestion(messageBody)
+                                val replyType = if (messageType == "intrebare_publica")
+                                    "raspuns_public" else "raspuns_privat"
+                                val dest = if (messageType == "intrebare_publica") "all" else senderPort
 
-                    when (messageType){
-                        "intrebare_publica", "intrebare_privata" ->{
-                            val tipAfisaj = if(messageType == "intrebare_publica") "PUBLIC" else "PRIVAT"
-                            println("\n[INTREBARE $tipAfisaj] de la $senderPort: \"$messageBody\"")
-
-                            val raspuns = respondToQuestion(messageBody)
-                            val replyType = if(messageType == "intrebare_publica") "raspuns_public" else "raspuns_privat"
-                            val dest = if (messageType == "intrebare_publica") "all" else senderPort
-                            if(raspuns != null){
                                 println(" -> Trimit $replyType: \"$raspuns\"")
-                                messageManagerSocket.getOutputStream().write(("$replyType $dest $raspuns\n").toByteArray())
-                            }else{
-                                println(" -> Trimit $replyType: \"$raspuns\"")
-                                messageManagerSocket.getOutputStream().write(("$replyType $dest nu fost gasit niciun raspuns\n").toByteArray())
+                                sendMessage("$replyType $dest $raspuns")
+                            }
+                            "raspuns_public", "raspuns_privat" ->{
+                                val tip = if (messageType == "raspuns_public") "PUBLIC" else "PRIVAT"
+                                println("\n[RASPUNS $tip] de la $senderPort: \"$messageBody\"")
                             }
                         }
-                        "raspuns_public", "raspuns_privat" -> {
-                            val tipAfisaj = if(messageType == "raspuns_public") "PUBLIC" else "PRIVAT"
-                            println("\n[RASPUNS $tipAfisaj] de la $senderPort: \"$messageBody\"")
-                        }
                     }
                 }
             }
+        select<Unit> {
+            inputJob.onJoin{receiveJob.cancel()}
+            receiveJob.onJoin{inputJob.cancel()}
         }
+        println("StudentMicroservice se opreste.")
+        runCatching { messageManagerSocket.close() }
     }
 }
 
-fun main() {
-    val studentMicroservice = StudentMicroservice()
-    studentMicroservice.run()
+fun main(){
+    StudentMicroservice().run()
 }

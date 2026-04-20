@@ -1,20 +1,22 @@
 package com.sd.laborator
 
+import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.net.*
-import kotlin.concurrent.thread
+import java.net.ServerSocket
+import java.net.Socket
 import kotlin.system.exitProcess
 
 class TeacherMicroservice {
     private lateinit var messageManagerSocket: Socket
-    private lateinit var teacherMicroserviceServerSocket: ServerSocket
+    private lateinit var teacherServerSocket: ServerSocket
 
-
-    @Volatile
+    private val guiMutex = Mutex()
     private var guiSocket: Socket? = null
 
-    companion object Constants {
+    companion object {
         val MESSAGE_MANAGER_HOST = System.getenv("MESSAGE_MANAGER_HOST") ?: "localhost"
         const val MESSAGE_MANAGER_PORT = 1500
         const val TEACHER_PORT = 1600
@@ -30,63 +32,85 @@ class TeacherMicroservice {
         }
     }
 
-    public fun run() {
-        subscribeToMessageManager()
-        teacherMicroserviceServerSocket = ServerSocket(TEACHER_PORT)
-        println("TeacherMicroservice se executa pe portul: ${teacherMicroserviceServerSocket.localPort}")
-
-        // Thread care citeste raspunsurile de la MessageManager si le trimite la GUI
-        thread {
-            val mmReader = BufferedReader(InputStreamReader(messageManagerSocket.inputStream))
-            while (true) {
-                val incoming = mmReader.readLine() ?: break
-                val parts = incoming.split(" ", limit = 3)
-
-                if (parts.size >= 3) {
-                    val (messageType, sender, body) = parts
-                    println("[$messageType] de la $sender: $body")
-
-                    if (messageType.startsWith("raspuns")) {
-                        val sock = guiSocket
-                        if (sock != null && !sock.isClosed) {
-                            try {
-                                sock.getOutputStream().write(("[$sender]: $body\n").toByteArray())
-                            } catch (e: Exception) {
-                                println("Eroare la trimitere catre GUI: ${e.message}")
-                                guiSocket = null
-                            }
+    private suspend fun sendToGui(message: String){
+        guiMutex.withLock {
+            guiSocket?.let { socket ->
+                if(!socket.isClosed){
+                    withContext(Dispatchers.IO){
+                        runCatching {
+                            socket.getOutputStream().write((message + "\n").toByteArray())
+                        }.onFailure {
+                            println("Eroare trimitere GUI: ${it.message}")
+                            guiSocket = null
                         }
                     }
                 }
             }
         }
+    }
 
-        while (true) {
-            val clientConnection = teacherMicroserviceServerSocket.accept()
-            println("GUI conectat: ${clientConnection.inetAddress.hostAddress}:${clientConnection.port}")
+    fun run() = runBlocking {
+        subscribeToMessageManager()
+        teacherServerSocket = ServerSocket(TEACHER_PORT)
+        println("TeacherMicroservice se executa pe portul: ${teacherServerSocket.localPort}")
 
-            guiSocket = clientConnection
+        launch(Dispatchers.IO) {
+            val mmReader = BufferedReader(InputStreamReader(messageManagerSocket.inputStream))
+            while (true){
+                val incoming = mmReader.readLine() ?: break
+                val parts = incoming.split(" ", limit = 3)
 
-            thread {
-                val clientBuffer = BufferedReader(InputStreamReader(clientConnection.inputStream))
+                if(parts.size >= 3){
+                    val(messageType, sender, body) = parts
+                    println("[$messageType] de la $sender: $body")
 
-
-                while (true) {
-                    val receivedQuestion = clientBuffer.readLine() ?: break
-                    println("Intrebare de la GUI: $receivedQuestion")
-                    messageManagerSocket.getOutputStream()
-                        .write(("intrebare_publica all $receivedQuestion\n").toByteArray())
+                    if(messageType.startsWith("raspuns")){
+                        sendToGui("[$sender]: $body")
+                    }
                 }
+            }
+            println("MessageManager s-a oprit.")
+        }
 
+        withContext(Dispatchers.IO){
+            while (true){
+                val clientConnection = teacherServerSocket.accept()
+                println("GUI conectat: ${clientConnection.inetAddress.hostAddress}:${clientConnection.port}")
+
+                guiMutex.withLock {
+                    guiSocket?.runCatching { close() }
+                    guiSocket = clientConnection
+                }
+                launch {
+                    handleGuiConnection(clientConnection)
+                }
+            }
+        }
+
+    }
+    private suspend fun handleGuiConnection(clientConnection: Socket) {
+        withContext(Dispatchers.IO) {
+            val reader = BufferedReader(InputStreamReader(clientConnection.inputStream))
+
+            try {
+                while (true) {
+                    val question = reader.readLine() ?: break
+                    println("Intrebare de la GUI: $question")
+                    messageManagerSocket.getOutputStream()
+                        .write(("intrebare_publica all $question\n").toByteArray())
+                }
+            } catch (e: Exception) {
+                println("Eroare conexiune GUI: ${e.message}")
+            } finally {
                 println("GUI deconectat.")
-                guiSocket = null
-                clientConnection.close()
+                guiMutex.withLock {
+                    if (guiSocket == clientConnection) guiSocket = null
+                }
+                runCatching { clientConnection.close() }
             }
         }
     }
 }
-
-fun main() {
-    val teacherMicroservice = TeacherMicroservice()
-    teacherMicroservice.run()
+fun main(){
+    TeacherMicroservice().run()
 }

@@ -4,3 +4,5 @@ Cat e ceasul?
 Cat ti-e nasul
 De ce a trecut gaina strada?
 Ca sa faca un ou
+mesaj dummy
+Mesaj dummy primit
