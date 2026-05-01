@@ -142,3 +142,102 @@
 13|Popescu Ion|Manusa chirurgicala|90|Codrii Vlasiei nr 14
 80|Ionescu Maria|Vaccin anti-COVID-19|44|Strada Primaverii nr 2
 21|Vasile Alexandru|Combinezon|66|Bulevardul Unirii nr 10
+22|Vasile Alexandru|Manusa chirurgicala|92|Bulevardul Unirii nr 10
+34|Vasile Alexandru|Masca protectie|78|Bulevardul Unirii nr 10
+43|Ionescu Maria|Manusa chirurgicala|92|Strada Primaverii nr 2
+29|Vasile Alexandru|Manusa chirurgicala|20|Bulevardul Unirii nr 10
+4|Vasile Alexandru|Combinezon|18|Bulevardul Unirii nr 10
+86|Popescu Ion|Vaccin anti-COVID-19|21|Codrii Vlasiei nr 14
+98|Ionescu Maria|Vaccin anti-COVID-19|76|Strada Primaverii nr 2
+60|Ionescu Maria|Masca protectie|93|Strada Primaverii nr 2
+72|Ionescu Maria|Combinezon|75|Strada Primaverii nr 2
+95|Ionescu Maria|Manusa chirurgicala|54|Strada Primaverii nr 2
+34|Popescu Ion|Combinezon|7|Codrii Vlasiei nr 14
+45|Ionescu Maria|Manusa chirurgicala|85|Strada Primaverii nr 2
+12|Ionescu Maria|Combinezon|23|Strada Primaverii nr 2
+31|Popescu Ion|Masca protectie|18|Codrii Vlasiei nr 14
+29|Ionescu Maria|Vaccin anti-COVID-19|99|Strada Primaverii nr 2
+84|Vasile Alexandru|Manusa chirurgicala|46|Bulevardul Unirii nr 10
+58|Vasile Alexandru|Vaccin anti-COVID-19|77|Bulevardul Unirii nr 10
+99|Vasile Alexandru|Manusa chirurgicala|38|Bulevardul Unirii nr 10
+30|Vasile Alexandru|Vaccin anti-COVID-19|23|Bulevardul Unirii nr 10
+44|Ionescu Maria|Manusa chirurgicala|71|Strada Primaverii nr 2
+58|Vasile Alexandru|Combinezon|12|Bulevardul Unirii nr 10
+18|Ionescu Maria|Vaccin anti-COVID-19|92|Strada Primaverii nr 2
+65|Popescu Ion|Manusa chirurgicala|5|Codrii Vlasiei nr 14
+88|Popescu Ion|Vaccin anti-COVID-19|62|Codrii Vlasiei nr 14
+25|Popescu Ion|Masca protectie|3|Codrii Vlasiei nr 14
+95|Vasile Alexandru|Vaccin anti-COVID-19|96|Bulevardul Unirii nr 10
+87|Popescu Ion|Masca protectie|35|Codrii Vlasiei nr 14
+85|Vasile Alexandru|Vaccin anti-COVID-19|43|Bulevardul Unirii nr 10
+10|Ionescu Maria|Combinezon|69|Strada Primaverii nr 2
+36|Popescu Ion|Combinezon|97|Codrii Vlasiei nr 14
+65|Vasile Alexandru|Combinezon|5|Bulevardul Unirii nr 10
+22|Vasile Alexandru|Masca protectie|55|Bulevardul Unirii nr 10
+91|Ionescu Maria|Combinezon|49|Strada Primaverii nr 2
+83|Ionescu Maria|Combinezon|22|Strada Primaverii nr 2
+32|Ionescu Maria|Combinezon|90|Strada Primaverii nr 2
+49|Vasile Alexandru|Combinezon|61|Bulevardul Unirii nr 10
+87|Ionescu Maria|Combinezon|13|Strada Primaverii nr 2
+73|Ionescu Maria|Vaccin anti-COVID-19|44|Strada Primaverii nr 2
+96|Ionescu Maria|Combinezon|65|Strada Primaverii nr 2
+26|Popescu Ion|Masca protectie|92|Codrii Vlasiei nr 14
+10|Ionescu Maria|Manusa chirurgicala|74|Strada Primaverii nr 2
+14|Vasile Alexandru|Masca protectie|11|Bulevardul Unirii nr 10
+9|Vasile Alexandru|Combinezon|92|Bulevardul Unirii nr 10
+4|Ionescu Maria|Masca protectie|13|Strada Primaverii nr 2
+27|Ionescu Maria|Masca protectie|59|Strada Primaverii nr 2
+14|Vasile Alexandru|Combinezon|63|Bulevardul Unirii nr 10
+88|Popescu Ion|Vaccin anti-COVID-19|87|Codrii Vlasiei nr 14
+32|Ionescu Maria|Combinezon|28|Strada Primaverii nr 2
+72|Popescu Ion|Vaccin anti-COVID-19|10|Codrii Vlasiei nr 14
+66|Vasile Alexandru|Manusa chirurgicala|73|Bulevardul Unirii nr 10
+69|Ionescu Maria|Vaccin anti-COVID-19|52|Strada Primaverii nr 2
+96|Ionescu Maria|Masca protectie|48|Strada Primaverii nr 2
+88|Vasile Alexandru|Manusa chirurgicala|84|Bulevardul Unirii nr 10
+64|Ionescu Maria|Combinezon|42|Strada Primaverii nr 2
+99|Vasile Alexandru|Combinezon|97|Bulevardul Unirii nr 10
+48|Popescu Ion|Manusa chirurgicala|46|Codrii Vlasiei nr 14
+20|Vasile Alexandru|Vaccin anti-COVID-19|48|Bulevardul Unirii nr 10
+44|Ionescu Maria|Masca protectie|93|Strada Primaverii nr 2
+36|Ionescu Maria|Masca protectie|41|Strada Primaverii nr 2
+33|Vasile Alexandru|Vaccin anti-COVID-19|61|Bulevardul Unirii nr 10
+88|Popescu Ion|Manusa chirurgicala|3|Codrii Vlasiei nr 14
+84|Ionescu Maria|Vaccin anti-COVID-19|55|Strada Primaverii nr 2
+3|Ionescu Maria|Masca protectie|35|Strada Primaverii nr 2
+40|Ionescu Maria|Masca protectie|47|Strada Primaverii nr 2
+38|Ionescu Maria|Masca protectie|48|Strada Primaverii nr 2
+75|Ionescu Maria|Manusa chirurgicala|40|Strada Primaverii nr 2
+53|Ionescu Maria|Vaccin anti-COVID-19|45|Strada Primaverii nr 2
+12|Ionescu Maria|Vaccin anti-COVID-19|23|Strada Primaverii nr 2
+34|Popescu Ion|Manusa chirurgicala|97|Codrii Vlasiei nr 14
+81|Popescu Ion|Masca protectie|51|Codrii Vlasiei nr 14
+40|Ionescu Maria|Manusa chirurgicala|10|Strada Primaverii nr 2
+28|Popescu Ion|Masca protectie|23|Codrii Vlasiei nr 14
+65|Vasile Alexandru|Combinezon|92|Bulevardul Unirii nr 10
+36|Ionescu Maria|Combinezon|35|Strada Primaverii nr 2
+24|Popescu Ion|Masca protectie|91|Codrii Vlasiei nr 14
+23|Popescu Ion|Masca protectie|1|Codrii Vlasiei nr 14
+79|Popescu Ion|Vaccin anti-COVID-19|59|Codrii Vlasiei nr 14
+55|Popescu Ion|Masca protectie|15|Codrii Vlasiei nr 14
+18|Ionescu Maria|Combinezon|70|Strada Primaverii nr 2
+46|Vasile Alexandru|Masca protectie|56|Bulevardul Unirii nr 10
+54|Ionescu Maria|Masca protectie|8|Strada Primaverii nr 2
+4|Ionescu Maria|Vaccin anti-COVID-19|30|Strada Primaverii nr 2
+82|Ionescu Maria|Manusa chirurgicala|31|Strada Primaverii nr 2
+78|Vasile Alexandru|Manusa chirurgicala|23|Bulevardul Unirii nr 10
+42|Ionescu Maria|Manusa chirurgicala|98|Strada Primaverii nr 2
+43|Ionescu Maria|Vaccin anti-COVID-19|60|Strada Primaverii nr 2
+39|Ionescu Maria|Manusa chirurgicala|86|Strada Primaverii nr 2
+28|Popescu Ion|Vaccin anti-COVID-19|67|Codrii Vlasiei nr 14
+21|Popescu Ion|Vaccin anti-COVID-19|98|Codrii Vlasiei nr 14
+60|Vasile Alexandru|Masca protectie|28|Bulevardul Unirii nr 10
+12|Vasile Alexandru|Combinezon|7|Bulevardul Unirii nr 10
+20|Popescu Ion|Manusa chirurgicala|77|Codrii Vlasiei nr 14
+81|Vasile Alexandru|Vaccin anti-COVID-19|61|Bulevardul Unirii nr 10
+23|Popescu Ion|Masca protectie|40|Codrii Vlasiei nr 14
+33|Ionescu Maria|Combinezon|88|Strada Primaverii nr 2
+34|Ionescu Maria|Manusa chirurgicala|12|Strada Primaverii nr 2
+19|Vasile Alexandru|Manusa chirurgicala|18|Bulevardul Unirii nr 10
+13|Popescu Ion|Combinezon|24|Codrii Vlasiei nr 14
+87|Ionescu Maria|Masca protectie|12|Strada Primaverii nr 2

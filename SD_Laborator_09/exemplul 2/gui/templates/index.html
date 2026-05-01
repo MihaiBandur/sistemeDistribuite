@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>lab 9 sd</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        </style>
+    </head>
+    <body>
+      <div class="form-container">
+    <h2>Plasare Comandă Nouă</h2>
+    <form action="/trimite_comanda" method="POST">
+        <div class="form-group">
+            <label for="nume">Nume și Prenume:</label>
+            <input type="text" id="nume" name="nume" required placeholder="Ex: Popescu Ion">
+        </div>
+        
+        <div class="form-group">
+            <label for="adresa">Adresă de livrare:</label>
+            <input type="text" id="adresa" name="adresa" required placeholder="Ex: Str. Primaverii nr. 2">
+        </div>
+
+        <div class="form-group">
+            <label for="produs">Produs dorit:</label>
+            <select id="produs" name="produs" required>
+                {% for p in produse %}
+                    <option value="{{ p }}">{{ p }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="cantitate">Cantitate (buc):</label>
+            <input type="number" id="cantitate" name="cantitate" min="1" required placeholder="Ex: 10">
+        </div>
+
+        <button type="submit">Trimite Comanda</button>
+    </form>
+</div>
+    </body>
+</html> 

@@ -71,3 +71,9 @@ FAC-1886444308|Comanda:42|Popescu Ion|Manusa chirurgicala|99 buc.
 FAC-123114115|Comanda:17|Popescu Ion|Manusa chirurgicala|37 buc.
 FAC-1996540579|Comanda:43|Popescu Ion|Manusa chirurgicala|41 buc.
 FAC-182936987|Comanda:21|Ionescu Maria|Combinezon|7 buc.
+FAC-1909587101|Comanda:4|Popescu Ion|Manusa chirurgicala|6 buc.
+FAC-1199456260|Comanda:58|Vasile Alexandru|Masca protectie|15 buc.
+FAC-1422583203|Comanda:65|Popescu Ion|Manusa chirurgicala|5 buc.
+FAC-458663167|Comanda:65|Popescu Ion|Manusa chirurgicala|5 buc.
+FAC-32962346|Comanda:96|Ionescu Maria|Manusa chirurgicala|2 buc.
+FAC-1541048096|Comanda:4|Popescu Ion|Manusa chirurgicala|6 buc.

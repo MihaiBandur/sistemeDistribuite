@@ -73,3 +73,9 @@ LIVRAT|42|Popescu Ion|Codrii Vlasiei nr 14
 LIVRAT|17|Popescu Ion|Codrii Vlasiei nr 14
 LIVRAT|43|Popescu Ion|Codrii Vlasiei nr 14
 LIVRAT|21|Ionescu Maria|Strada Primaverii nr 2
+LIVRAT|4|Popescu Ion|Codrii Vlasiei nr 14
+LIVRAT|58|Vasile Alexandru|Bulevardul Unirii nr 10
+LIVRAT|65|Popescu Ion|Codrii Vlasiei nr 14
+LIVRAT|65|Popescu Ion|Codrii Vlasiei nr 14
+LIVRAT|96|Ionescu Maria|Strada Primaverii nr 2
+LIVRAT|4|Popescu Ion|Codrii Vlasiei nr 14
