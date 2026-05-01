@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 
-CLIENT_MICROSERVICE_URL = "http://localhost:8081/api/lanseaza-comanda"
+CLIENT_MICROSERVICE_URL = "http://localhost:8081/api/client"
 
 @app.route('/')
 def index():
@@ -16,7 +16,7 @@ def index():
     ]
     return render_template('index.html', produse=produse)
 
-@app.route('/trimite_comanda', methods=['POST'])
+@app.route('/client', methods=['POST'])
 def trimite_comanda():
     nume = request.form.get('nume')
     adresa = request.form.get('adresa')
