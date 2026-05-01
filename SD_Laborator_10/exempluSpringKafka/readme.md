@@ -1,0 +1,1 @@
+In src/main/resources/application.properties veti gasi o proprietate care indica aplicatiei unde sa gaseasca serverul de kafka. Prestabilit este setat la localhost:9092. Daca folositi kafka intr-un VM sau in alta locatie, atunci modificati respectiva proprietate.

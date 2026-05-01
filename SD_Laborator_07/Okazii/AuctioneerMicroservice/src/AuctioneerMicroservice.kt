@@ -43,7 +43,7 @@ class AuctioneerMicroservice {
         if (unfinished.isNotEmpty()) {
             println("Auctioneer: detectate operatii neterminate – se reia procesarea...")
             unfinished.forEach { (opId, data) ->
-                println("  • Reia operatia '$opId'")
+                println("  Reia operatia '$opId'")
                 when {
                     opId.startsWith("receive_bid_") -> {
                         // Ofertă primită dar nepusă în coadă – reconstituim din date
@@ -51,14 +51,14 @@ class AuctioneerMicroservice {
                             val msg = Message.deserialize(data.toByteArray())
                             bidQueue.add(msg)
                             journal.logEnd(opId)
-                            println("  ✓ Oferta recuperată: $msg")
+                            println("  Oferta recuperată: $msg")
                         } catch (e: Exception) {
-                            println("  ✗ Nu s-a putut recupera oferta: ${e.message}")
+                            println("   Nu s-a putut recupera oferta: ${e.message}")
                         }
                     }
                     opId.startsWith("forward_bids_") -> {
                         // Redirecționarea a fost întreruptă; se va relua în forwardBids()
-                        println("  ↻ Redirecționare în curs – va fi reluată după colectare.")
+                        println("  Redirecționare în curs – va fi reluată după colectare.")
                     }
                 }
             }

@@ -1,0 +1,1 @@
+Aceasta aplicatie este important sa fie rulata pe acelasi host unde rulati si instantele de docker intrucat se foloseste de socket-ul server-ului de docker local pentru a interoga diverse lucruri legate de starea containerelor.

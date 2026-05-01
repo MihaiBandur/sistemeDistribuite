@@ -1,0 +1,38 @@
+session_name: okazii_v2
+
+windows:
+  - window_name: python-scripts
+    layout: tiled
+    panes:
+      # Pane 1: Pregătire Topicuri + Lansare 100 Bidders (Docker)
+      - shell_command:
+          # Rămânem în folderul principal pentru a rula scriptul Python
+          - source .venv/bin/activate
+          - python3 PrepareAuction.py
+          # După ce pregătim topicurile, ieșim și mergem în folderul Bidder
+          - cd ../Bidder_Docker
+          - sleep 5
+          - docker-compose up
+          # (Dacă nu ai adăugat 'replicas: 100' în docker-compose.yml, folosește linia de mai jos în loc de cea de sus)
+          # - docker-compose up --scale bidder=100
+
+      # Pane 2: Message Processor (Rămâne în folderul principal)
+      - shell_command:
+          - source .venv/bin/activate
+          - sleep 5
+          - python3 MessageProcessor.py
+
+      # Pane 3: Bidding Processor (Rămâne în folderul principal)
+      - shell_command:
+          - source .venv/bin/activate
+          - sleep 5
+          - python3 BiddingProcessor.py
+
+      # Pane 4: Lansare 4 Auctioneers (Docker)
+      - shell_command:
+          # Ieșim direct din folderul principal și mergem în cel de Auctioneer
+          - cd ../Auctioneer_Docker
+          - sleep 5
+          - docker-compose up
+          # (Dacă nu ai adăugat 'replicas: 4' în docker-compose.yml, folosește linia de mai jos în loc de cea de sus)
+          # - docker-compose up --scale auctioneer=4

@@ -45,7 +45,7 @@ class HeartbeatMicroservice {
                 for(service in deadServices){
                     println("Alarma ~> Microserviciul $service  apicat. Se incearca repornisrea acestuia")
 
-                    //restartService()
+                    restartService(service)
 
                     registry[service] = System.currentTimeMillis()
                 }
