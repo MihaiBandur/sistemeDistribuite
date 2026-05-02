@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*
 import javax.annotation.PostConstruct
 
 data class Client(val nume: String, val adresa: String)
+data class ComenziAmanate(val numeClient: String, val produs: String, val cantitate: Int)
+
 @SpringBootApplication
 @RestController
 @RequestMapping("/api")
@@ -29,7 +31,8 @@ class DatabaseMicroservice (val jdbcTemplate: JdbcTemplate){
             """
             CREATE TABLE IF NOT EXISTS stoc (
                 produs TEXT PRIMARY KEY,
-                cantitate INTEGER
+                cantitate INTEGER,
+                prag_reaprovizionare INTEGER DEFAULT 3
             )
         """
         )
@@ -58,6 +61,16 @@ class DatabaseMicroservice (val jdbcTemplate: JdbcTemplate){
             )
         """
         )
+
+        jdbcTemplate.execute("""
+            CREATE TABLE IF NOT EXISTS comenzi_amanate(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nume_client TEXT,
+                produs TEXT,
+                cantitate INTEGER,
+                data_amanare TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
 
 
         // Populam stocul initial
@@ -121,6 +134,50 @@ class DatabaseMicroservice (val jdbcTemplate: JdbcTemplate){
     fun getEntireStoc(): List<Map<String, Any>>{
         return jdbcTemplate.queryForList("SELECT * FROM stoc")
     }
+
+    @PostMapping("/comenzi-amanate")
+    fun salveazaComandaAmanata(@RequestBody req: ComenziAmanate){
+        jdbcTemplate.update(
+            "INSERT INTO comenzi_amanate (nume_client, produs, cantitate) VALUES (?, ?, ?)",
+            req.numeClient, req.produs, req.cantitate
+        )
+        println("DB: Comanda amanata salvata pentru clientul ${req.numeClient}")
+    }
+
+    @GetMapping("/comenzi-amanate/{client}")
+    fun getComandaAmanataPentruClinet(@PathVariable client: String): List<Map<String, Any>>{
+        return jdbcTemplate.queryForList("SELECT * FROM comenzi_amanate WHERE nume_client = ?", client)
+    }
+
+    @GetMapping("/stoc/verificare-aprovizionare")
+    fun verificareAprovizionare(@RequestParam produs: String): Boolean{
+        val comenziAmanate = jdbcTemplate.queryForObject(
+            "SELECT COUNT(*) FROM comenzi_amanate WHERE produs = ?",
+            Int::class.java,
+            produs
+        ) ?: 0
+
+        val prag = jdbcTemplate.queryForObject(
+            "SELECT prag_reaprovizionare FROM stoc WHERE produs = ?",
+            Int::class.java,
+            produs
+        ) ?: 3
+
+        return comenziAmanate >= prag
+    }
+
+    @PostMapping("/stoc/aprovizionare")
+    fun reaprovizionareStoc(@RequestParam produs: String, @RequestParam cantitate: Int){
+
+        jdbcTemplate.update(
+            "UPDATE stoc SET cantitate = cantitate + ? WHERE produs = ?",
+            cantitate, produs
+        )
+        println("DB: Am adaugat $cantitate bucati de $produs la stocul existent.")
+
+        jdbcTemplate.update("DELETE FROM comenzi_amanate WHERE produs = ?", produs)
+    }
+
 }
 
 fun main(args: Array<String>) {
