@@ -1,38 +1,34 @@
 session_name: okazii_v2
 
 windows:
-  - window_name: python-scripts
+  - window_name: microservicii-licitatie
     layout: tiled
     panes:
-      # Pane 1: Pregătire Topicuri + Lansare 100 Bidders (Docker)
+      # Pane 1: Pregătire topicuri și pornire Bidder (prin Docker)
       - shell_command:
-          # Rămânem în folderul principal pentru a rula scriptul Python
           - source .venv/bin/activate
           - python3 PrepareAuction.py
-          # După ce pregătim topicurile, ieșim și mergem în folderul Bidder
+          - sleep 10  # Așteptăm ca topicurile să fie create
           - cd ../Bidder_Docker
-          - sleep 5
-          - docker-compose up
-          # (Dacă nu ai adăugat 'replicas: 100' în docker-compose.yml, folosește linia de mai jos în loc de cea de sus)
-          # - docker-compose up --scale bidder=100
+          #- docker-compose up --build # Construiește și pornește containerul Bidder
+          - docker-compose up  --build --scale bidder=10
 
-      # Pane 2: Message Processor (Rămâne în folderul principal)
+      # Pane 2: Message Processor
       - shell_command:
           - source .venv/bin/activate
-          - sleep 5
+          - sleep 10  # Așteptăm ca totul să se inițializeze
           - python3 MessageProcessor.py
 
-      # Pane 3: Bidding Processor (Rămâne în folderul principal)
+
+      # Pane 3: Bidding Processor
       - shell_command:
           - source .venv/bin/activate
-          - sleep 5
+          - sleep 10
           - python3 BiddingProcessor.py
 
-      # Pane 4: Lansare 4 Auctioneers (Docker)
+      # Pane 4: Auctioneer Docker
       - shell_command:
-          # Ieșim direct din folderul principal și mergem în cel de Auctioneer
           - cd ../Auctioneer_Docker
-          - sleep 5
-          - docker-compose up
-          # (Dacă nu ai adăugat 'replicas: 4' în docker-compose.yml, folosește linia de mai jos în loc de cea de sus)
-          # - docker-compose up --scale auctioneer=4
+          - sleep 10
+          #- docker-compose up --build
+          - docker-compose up  --build  --scale auctioneer=1

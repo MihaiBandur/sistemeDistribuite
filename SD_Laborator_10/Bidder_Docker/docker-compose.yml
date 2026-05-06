@@ -5,6 +5,4 @@ services:
       context: .
     network_mode: "host"
     environment:
-      # - KAFKA_SERVER=192.168.23.129:9092
       - KAFKA_SERVER=localhost:9092
-

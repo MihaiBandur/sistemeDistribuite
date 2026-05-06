@@ -1,7 +1,9 @@
 import os
-from kafka import KafkaProducer, KafkaConsumer
-from random import randint
+import time
+from random import randint, uniform
 from uuid import uuid4
+from kafka import KafkaProducer, KafkaConsumer
+from kafka.errors import NoBrokersAvailable
 
 KAFKA_SERVER = os.environ.get("KAFKA_SERVER", "localhost:9092") # Setati variabila de mediu in caz ca serverul vostru se afla intr-o alta locatie
 
