@@ -5,18 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e66f48f-b718-4755-a367-073477e0960a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SD_Laborator_07/Okazii/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SD_Laborator_07/Okazii/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SD_Laborator_09/exemplul 2/Database/date_comenzi.db" beforeDir="false" afterPath="$PROJECT_DIR$/../../SD_Laborator_09/exemplul 2/Database/date_comenzi.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bidder_Docker/Bidder.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Bidder_Docker/Bidder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bidder_Docker/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Bidder_Docker/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bidder_Docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bidder_Docker/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Okazii_v2/PrepareAuction.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Okazii_v2/PrepareAuction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Okazii_v2/run_all.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../Okazii_v2/run_all.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kafka-docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../kafka-docker/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

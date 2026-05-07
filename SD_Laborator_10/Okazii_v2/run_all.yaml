@@ -11,7 +11,7 @@ windows:
           - sleep 10  # Așteptăm ca topicurile să fie create
           - cd ../Bidder_Docker
           #- docker-compose up --build # Construiește și pornește containerul Bidder
-          - docker-compose up  --build --scale bidder=10
+          - docker-compose up  --build --scale bidder=30
 
       # Pane 2: Message Processor
       - shell_command:
@@ -31,4 +31,4 @@ windows:
           - cd ../Auctioneer_Docker
           - sleep 10
           #- docker-compose up --build
-          - docker-compose up  --build  --scale auctioneer=1
+          - docker-compose up  --build  --scale auctioneer=2
