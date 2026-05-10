@@ -5,19 +5,26 @@ import io.micronaut.rabbitmq.annotation.RabbitListener
 import org.slf4j.LoggerFactory
 
 @RabbitListener
-class ClickConsumer(private  val repository: CounterRepository) {
+class ClickConsumer(private  val repository: ButtonStatRepository) {
     private val LOG = LoggerFactory.getLogger(ClickConsumer::class.java)
 
     @Queue("click_queue")
-    fun processClickEvent(message: String){
-        LOG.info("Functia a preluat mesajul din coada: $message")
+    fun processClickEvent(event: ClickEvent){
+        LOG.info("Functia a preluat mesajul din coada: ${event.buttonName}")
 
-        val counter = repository.findById(1L).orElse(ClickCounter(1L, 0))
+        val existingStat = repository.findByButtonName(event.buttonName)
 
-        counter.clicks +=1
+        if(existingStat.isPresent){
+            val stat = existingStat.get()
+            stat.clicks += 1
+            repository.update(stat)
+            LOG.info("S-a actuazlizat contorul butonul ${stat.buttonName} fiind apasat de ${stat.clicks}")
+        }
+        else{
+            val newStat = ButtonStat(buttonName = event.buttonName, clicks = 1)
+            repository.save(newStat)
+            LOG.info("Butonul ${event.buttonName} a fost creat cu succes")
+        }
 
-        repository.update(counter)
-
-        LOG.info("MySQL actualizat! Total click-uri: ${counter.clicks}")
     }
 }

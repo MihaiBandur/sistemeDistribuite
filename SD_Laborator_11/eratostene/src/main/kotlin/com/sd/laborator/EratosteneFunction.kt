@@ -15,22 +15,27 @@ class EratosteneFunction: FunctionInitializer(), Function<EratosteneRequest, Era
 
     override fun apply(t: EratosteneRequest): EratosteneResponse {
         val number = t.get_Number()
-
+        val numbersToFileter = t.get_numbersToCheck()
         val response = EratosteneResponse()
 
         if(number >= eratosteneSieveService.MAX_SIZE){
             LOG.error("Parametru prea mare! $number > maximul de ${eratosteneSieveService.MAX_SIZE}")
-
             response.setMessage("Se accepta doar parametri mai mici ca" + eratosteneSieveService.MAX_SIZE)
             return response
         }
 
-        LOG.info("Se calculeaza primele $number numere prime ...")
+        LOG.info("Se calculeaza primele numere pana la $number pentru a verifica lista primita...")
 
-        response.setPrimes(eratosteneSieveService.findPrimesLessThan(number))
-        response.setMessage("Calcul efectuat cu succes!")
+        val foundPrimesToTheLimit = eratosteneSieveService.findPrimesLessThan(number)
 
+        val primesToSet = foundPrimesToTheLimit.toSet()
 
+        val responsePrimes = numbersToFileter.filter { numar ->
+            primesToSet.contains(numar)
+        }
+
+        response.setPrimes(responsePrimes)
+        response.setMessage("Din cele ${numbersToFileter.size} numere primite din coada, ${responsePrimes.size} sunt prime.")
         LOG.info("Calcul incheiat!")
         return response
     }

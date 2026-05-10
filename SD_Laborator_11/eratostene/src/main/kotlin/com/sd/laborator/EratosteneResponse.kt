@@ -6,12 +6,12 @@ import io.micronaut.serde.annotation.Serdeable
 @Serdeable.Serializable
 class EratosteneResponse {
     private var message: String? = null
-    private var primes: List<Int>? = null
+    private var primesList: List<Int>? = null
 
-    fun getPrimes(): List<Int>? = primes
+    fun getPrimes(): List<Int>? = primesList
 
     fun setPrimes(primes: List<Int>?){
-        this.primes = primes
+        this.primesList = primes
     }
 
     fun getMessage(): String? = message

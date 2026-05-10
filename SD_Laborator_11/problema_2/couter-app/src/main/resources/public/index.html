@@ -1,30 +1,47 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="UTF-8">
         <title>Contor RabbitMq</title>
         <style>
-            body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
-            button { padding: 20px 40px; font-size: 24px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 10px; }
-            button:hover { background: #0056b3; }
-            #status { margin-top: 20px; font-weight: bold; color: green; }
+            body { font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center; margin-top: 50px; background-color: #f8f9fa;}
+        .btn-container { display: flex; justify-content: center; gap: 20px; margin-top: 40px;}
+        button { padding: 15px 30px; font-size: 18px; cursor: pointer; border: none; border-radius: 8px; color: white; transition: 0.3s; font-weight: bold;}
+        .btn-red { background-color: #e74c3c; } .btn-red:hover { background-color: #c0392b; }
+        .btn-green { background-color: #2ecc71; } .btn-green:hover { background-color: #27ae60; }
+        .btn-blue { background-color: #3498db; } .btn-blue:hover { background-color: #2980b9; }
+        #log { margin-top: 30px; padding: 15px; background: #fff; width: 60%; margin: 30px auto; border-radius: 8px; text-align: left; height: 250px; overflow-y: auto; border: 1px solid #ddd; box-shadow: 0 4px 6px rgba(0,0,0,0.05);}
+        .log-entry { margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 4px; }
         </style>
     </head>
     <body>
-    <h1>Exercițiul 2 - Contor Asincron</h1>
-    <button onclick="sendClickEvent()">Apasă-mă!</button>
-    <div id="status"></div>
-    <script>
-        function sendClickEvent() {
-            fetch('/api/click', { method: 'POST' })
-            .then(response => {
-                document.getElementById('status').innerText = "Click pus în coada RabbitMQ!";
-                setTimeout(() => document.getElementById('status').innerText = "", 2000);
+    <h1>Apasa un Button</h1>
+    <div>
+        <button class="btn-red" onclick="sendClickEvent('Buton Rosu')">Buton Rosu</button>
+        <button class="btn-green" onclick="sendClickEvent('Buton Verde')">Buton Verde</button>
+        <button class="btn-blue" onclick="sendClickEvent('Buton Albastru')">Buton Albastru</button>
+
+        <div id="log">
+            <strong> Butoane apasate </strong><br><br>
+        </div>
+
+        <script>
+            function sendClickEvent(numeButon){
+                fetch('/api/click', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ buttonName: numeButon })
             })
-            // Aici lipsea ); la final
+            .then(response => {
+                const logDiv = document.getElementById('log');
+                const time = new Date().toLocaleTimeString();
+                logDiv.innerHTML += `<div class="log-entry"><span style="color: grey;">[${time}]</span> Ai dat click pe <b>${numeButon}</b>. Evenimentul este în coadă!</div>`;
+                logDiv.scrollTop = logDiv.scrollHeight; // Autoscroll la ultimul log
+            })
             .catch(error => console.error('Eroare:', error));
         }
-    </script>
+        </script>
+    </div>
     </body>
 
 </html>>
