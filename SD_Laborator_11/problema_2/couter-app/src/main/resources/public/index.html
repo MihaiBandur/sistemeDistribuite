@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <meta charset="UTF-8">
+        <title>Contor RabbitMq</title>
+        <style>
+            body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
+            button { padding: 20px 40px; font-size: 24px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 10px; }
+            button:hover { background: #0056b3; }
+            #status { margin-top: 20px; font-weight: bold; color: green; }
+        </style>
+    </head>
+    <body>
+    <h1>Exercițiul 2 - Contor Asincron</h1>
+    <button onclick="sendClickEvent()">Apasă-mă!</button>
+    <div id="status"></div>
+    <script>
+        function sendClickEvent() {
+            fetch('/api/click', { method: 'POST' })
+            .then(response => {
+                document.getElementById('status').innerText = "Click pus în coada RabbitMQ!";
+                setTimeout(() => document.getElementById('status').innerText = "", 2000);
+            })
+            // Aici lipsea ); la final
+            .catch(error => console.error('Eroare:', error));
+        }
+    </script>
+    </body>
+
+</html>>

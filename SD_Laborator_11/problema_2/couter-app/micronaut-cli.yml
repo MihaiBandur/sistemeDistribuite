@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.sd.laborator
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: maven
+features: [app-name, data, data-jdbc, http-client-test, jdbc-hikari, junit, kapt, kotlin, kotlin-application, logback, maven, maven-enforcer-plugin, micronaut-aot, micronaut-http-validation, micronaut-processing-compiler-args, mysql, netty-server, properties, rabbitmq, readme, serialization-jackson, shade, static-resources, test-resources]
