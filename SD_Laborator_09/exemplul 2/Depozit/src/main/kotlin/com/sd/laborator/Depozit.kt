@@ -64,7 +64,7 @@ class DepozitMicroservice(private  val canale: CanaleDepozit) {
                         .setHeader("tipEveniment", "LIPSA_STOC_CRITICA") // Metadate specifice evenimentelor
                         .build()
 
-                    canale.evenimentAprovizionare().send(cloudEvent)
+                    ca  nale.evenimentAprovizionare().send(cloudEvent)
                 }
 
                 return null

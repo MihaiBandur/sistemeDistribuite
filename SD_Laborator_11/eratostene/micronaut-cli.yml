@@ -1,0 +1,6 @@
+applicationType: function
+defaultPackage: com.sd.laborator
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: maven
+features: [app-name, aws-lambda, aws-lambda-events-serde, aws-lambda-handler-function, http-client-test, junit, kapt, kotlin, logback, maven, maven-enforcer-plugin, micronaut-processing-compiler-args, properties, readme, serialization-jackson, shade, snapstart, x86]
