@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> Monitorizare Licitatii Live</title>
+
+        <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+        <style>
+            body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f9; }
+            #grafic { width: 90%; max-width: 1000px; height: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        </style>
+    </head>
+    <body>
+        <h2>Grafic în Timp Real - Licitatii Kafka</h2>
+        <div id="grafic"></div>
+
+    <script>
+        async function fetchAndUpdateGraph() {
+            try {
+                // Luam datele proaspete din Spring Boot
+                const response = await fetch('/api/metrics');
+                const data = await response.json();
+
+                // Linia pentru oferte primite
+                const trace1 = {
+                    x: data.time,
+                    y: data.bids,
+                    name: 'Oferte Primite (Auctioneer)',
+                    type: 'scatter',
+                    line: { color: 'blue', width: 3 }
+                };
+
+                // Linia pentru oferte procesate
+                const trace2 = {
+                    x: data.time,
+                    y: data.processed,
+                    name: 'Oferte Procesate (MessageProcessor)',
+                    type: 'scatter',
+                    line: { color: 'green', width: 3 }
+                };
+
+                const layout = {
+                    title: 'Rata de mesaje in Apache Kafka',
+                    xaxis: { title: 'Timp (Ora curentă)' },
+                    yaxis: { title: 'Număr total de mesaje' },
+                    margin: { t: 50, l: 50, r: 50, b: 50 }
+                };
+                Plotly.react('grafic', [trace1, trace2], layout);
+            } catch (error) {
+                console.error("Eroare la preluarea datelor:", error);
+            }
+        }
+        fetchAndUpdateGraph();
+        setInterval(fetchAndUpdateGraph, 1000);
+    </script>
+    </body>
+</html>>
