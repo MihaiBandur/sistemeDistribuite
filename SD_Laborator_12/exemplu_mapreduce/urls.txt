@@ -1,0 +1,4 @@
+https://en.wikipedia.org/wiki/Hadoop
+https://en.wikipedia.org/wiki/MapReduce
+https://www.gutenberg.org/
+
