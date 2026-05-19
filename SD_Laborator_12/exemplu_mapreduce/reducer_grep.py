@@ -14,7 +14,7 @@ for linie in sys.stdin:
     except ValueError:
         continue
 
-string_final = " | ".join(toate_liniile)
+string_final = " \n ".join(toate_liniile)
 
 if len(toate_liniile) > 0:
     print(f"REZULTAT_FINAL\t{string_final}")
