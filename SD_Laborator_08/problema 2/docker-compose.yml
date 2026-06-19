@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  message-manager:
+    build: 
+      context: ./MessageManagerMicroservice
+    container_name: message-manager
+    ports:
+      - "1500:1500"
+    networks:
+      - lab-network
+
+  database:
+    build: 
+      context: ./DatabaseMicroservice
+    container_name: database
+    ports:
+      - "1700:1700"
+    volumes:
+      - sqlite-data:/db
+    networks:
+      - lab-network
+
+  teacher:
+    build: 
+      context: ./TeacherMicroservice
+    container_name: teacher
+    ports:
+      - "1600:1600"
+    environment:
+      - MESSAGE_MANAGER_HOST=message-manager
+      - DB_HOST=database
+    depends_on:
+      - message-manager
+      - database
+    networks:
+      - lab-network
+
+  heartbeat:
+    build: 
+      context: ./HeartbeatMicroservice
+    container_name: heartbeat
+    environment:
+      - MESSAGE_MANAGER_HOST=message-manager
+      - HEARTBEAT_INTERVAL_MS=5000
+      - HEARTBEAT_MISSED_THRESHOLD=3
+    depends_on:
+      - message-manager
+    networks:
+      - lab-network
+
+  student:
+    build: 
+      context: ./StudentMicroservice
+    container_name: student
+    environment:
+      - MESSAGE_MANAGER_HOST=message-manager
+    depends_on:
+      - message-manager
+    networks:
+      - lab-network
+    # Aceste două linii sunt CRITICE pentru StudentMicroservice:
+    # Permit containerului sa astepte input de la tastatura ta (System.in)
+    stdin_open: true 
+    tty: true
+
+networks:
+  lab-network:
+    driver: bridge
+
+volumes:
+  sqlite-data:

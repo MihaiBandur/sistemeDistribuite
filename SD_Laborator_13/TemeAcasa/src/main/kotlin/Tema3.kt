@@ -1,6 +1,5 @@
 package com.sd.laborator
 
-import org.apache.hadoop.shaded.org.apache.http.util.Args
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.Durations
 import org.apache.spark.streaming.api.java.JavaStreamingContext

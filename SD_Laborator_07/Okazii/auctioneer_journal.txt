@@ -1,0 +1,3 @@
+START|forward_bids_1781803998709|trimitere_catre_message_processor
+END|forward_bids_1781803998709|
+START|finish_auction_1781803998735|asteptare_rezultat_bidding_processor

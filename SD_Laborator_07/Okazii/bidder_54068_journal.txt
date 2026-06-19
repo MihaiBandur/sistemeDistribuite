@@ -1,0 +1,3 @@
+START|bid_54068_1781803984748|1781803984748|/127.0.0.1:54068|Ion Popescu|0700123456|ion.popescu@example.com|licitez 6056
+END|bid_54068_1781803984748|
+START|wait_result_54068|asteptare_rezultat

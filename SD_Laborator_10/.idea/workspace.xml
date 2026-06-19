@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7bb7d143-fe7e-4a2c-bd6f-beb18b57544f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../SD_Laborator_08/problema 2/run_docker.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_03/WeatherApp/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_03/WeatherApp/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_03/WeatherApp/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_03/WeatherApp/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_03/WeatherApp/src/main/kotlin/com/sd/laborator/services/filterRegionsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_03/WeatherApp/src/main/kotlin/com/sd/laborator/services/filterRegionsService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_04/flask_interface/.idea/flask_interface.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_04/flask_interface/.idea/flask_interface.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_04/flask_interface/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_04/flask_interface/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_1/StackApp/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_1/StackApp/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_1/qt_gui/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_1/qt_gui/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_1/qt_gui/.idea/qt_gui.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_1/qt_gui/.idea/qt_gui.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_2/LibraryApp/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_2/LibraryApp/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_2/LibraryApp/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_2/LibraryApp/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_2/qt_gui/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_2/qt_gui/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_2/qt_gui/.idea/qt_gui.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_05/exemplul_2/qt_gui/.idea/qt_gui.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_06/exemplu_beerapp/BeerApp/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_06/exemplu_beerapp/BeerApp/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_06/exemplu_libraryapp/LibraryApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_06/exemplu_libraryapp/LibraryApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_07/Okazii/AuctioneerMicroservice/AuctioneerMicroservice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_07/Okazii/AuctioneerMicroservice/AuctioneerMicroservice.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_07/Okazii/BidderMicroservice/BidderMicroservice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_07/Okazii/BidderMicroservice/BidderMicroservice.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_07/Okazii/BiddingProcessorMicroservice/BiddingProcessorMicroservice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_07/Okazii/BiddingProcessorMicroservice/BiddingProcessorMicroservice.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_07/Okazii/MessageProcessorMicroservice/MessageProcessorMicroservice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_07/Okazii/MessageProcessorMicroservice/MessageProcessorMicroservice.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_08/problema 2/TeacherStudentUI/.idea/TeacherStudentUI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_08/problema 2/TeacherStudentUI/.idea/TeacherStudentUI.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_08/problema 2/TeacherStudentUI/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_08/problema 2/TeacherStudentUI/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651537000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651537000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651540000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651540000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651543000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651543000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651546000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651546000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651549000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/.checkpoint-1779651549000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651537000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651537000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651540000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651540000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651543000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651543000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651546000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651546000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651549000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/checkpoint-1779651549000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/receivedBlockMetadata/log-1779651477198-1779651537198" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/SparkTemeLaborator/src/main/resources/checkpoint_dir/receivedBlockMetadata/log-1779651540109-1779651600109" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/kotlin/Tema3.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/kotlin/Tema3.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657700000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657700000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657705000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657705000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657710000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657710000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657715000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657715000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657720000.bk.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/.checkpoint-1779657720000.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657700000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657700000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657705000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657705000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657710000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657710000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657715000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657715000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657720000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/checkpoint-1779657720000.bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/receivedBlockMetadata/log-1779657650103-1779657710103" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_Laborator_13/TemeAcasa/src/main/resources/checkpoint/receivedBlockMetadata/log-1779657710106-1779657770106" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="3FJvxERKLftBhreuSCbMQZXmbsC" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/bandu/Documents/Anul_trei/Semestrul_doi/Sisteme_Distribuite/laboratoare_facute_de_mine/SD_Laborator_10"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-401cc9104683-e2d783800521-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.29188.22" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7bb7d143-fe7e-4a2c-bd6f-beb18b57544f" name="Changes" comment="" />
+      <created>1781806230968</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781806230968</updated>
+    </task>
+    <servers />
+  </component>
+</project>

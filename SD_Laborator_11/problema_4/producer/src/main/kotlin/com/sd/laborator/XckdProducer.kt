@@ -15,7 +15,7 @@ class XckdProducer: Supplier<String> {
     private val LOG = LoggerFactory.getLogger(XckdProducer::class.java)
     override fun get(): String {
         LOG.info("Producatorul a fost activat")
-        val xmlContent = URL("https://xkcd.com/atom.xml").readText()
+        val xmlContent = URL("https://www.reddit.com/r/programming/.rss").readText()
 
         LOG.info("Trimit datele catre consumator ")
 

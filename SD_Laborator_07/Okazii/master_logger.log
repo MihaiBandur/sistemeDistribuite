@@ -1,0 +1,13 @@
+Master Logger a pornit si asculta pe portul 3000...
+Exception in thread "Thread-0" java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:511)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1241)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1215)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:105)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1311)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:310)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:349)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:325)
+	at MasterLoggerMicroservice.start$lambda$0(MasterLoggerMicroservice.kt:15)
+	at kotlin.concurrent.ThreadsKt$thread$thread$1.run(Thread.kt:30)
